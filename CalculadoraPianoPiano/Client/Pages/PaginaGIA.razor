@@ -1,0 +1,45 @@
+﻿@page "/GIA/{sabor}"
+@inject NavigationManager NavigationManager
+@using CalculadoraPianoPiano.Shared
+
+@switch (sabor)
+{
+    case "TIC":
+        <GIATIC/>
+        break;
+    case "PMO":
+        <GIAPMO/>
+        break;
+    case "ciberSeguridad":
+        <GIACiberSeguridad/>
+        break;
+    case "IoT":
+        <GIAIoT/>
+        break;
+    default:
+        <h1>Problema</h1>
+        break;
+}
+
+<button @onclick='() => NavigationManager.NavigateTo("seleccionDeSabores")'>Regresar a Seleccion de Sabores</button>
+
+
+
+@code
+{
+    [Parameter]
+    public string sabor { get; set; }
+
+    [CascadingParameter]
+    public Cliente? nuevoCliente { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        //the param will be set now
+        var test = nuevoCliente.InfoCliente.Madurez;
+        Console.WriteLine(test);
+        Console.WriteLine(sabor);
+    }
+
+
+}

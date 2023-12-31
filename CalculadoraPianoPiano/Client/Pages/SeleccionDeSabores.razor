@@ -1,0 +1,65 @@
+﻿@page "/seleccionDeSabores"
+@inject NavigationManager NavigationManager
+@using CalculadoraPianoPiano.Shared
+
+<PageTitle>Seleccion De Sabores</PageTitle>
+
+<h3>Seleccion de Sabores GIA</h3>
+
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        <button class="large-button" @onclick="navegarATIC">GIA TIC</button>
+        <button class="large-button" @onclick="navegarAPMO">GIA PMO</button>
+        <button class="large-button" @onclick="navegarAIoT">GIA IoT</button>
+        <button class="large-button" @onclick="navegarACiberSeguridad">GIA Ciber Seguridad</button>
+    </div>
+</div>
+
+<p>Cliente: @nuevoCliente.InfoCliente.Nombre</p>
+<p>Madurez: @nuevoCliente.InfoCliente.Madurez</p>
+<p>Sector: @nuevoCliente.InfoCliente.Sector</p>
+
+
+
+<button @onclick='() => NavigationManager.NavigateTo("resumen")'>Ir a Resumen de Servicios</button>
+
+@code {
+    [CascadingParameter]
+    public Cliente? nuevoCliente { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        //the param will be set now
+        var test = nuevoCliente.InfoCliente.Madurez;
+        Console.WriteLine(test);
+    }
+
+    private void navegarATIC()
+    {
+        //Cliente.GIATIC = new GIATIC();
+        NavigationManager.NavigateTo("GIA/TIC");
+    }
+
+    private void navegarAPMO()
+    {
+        //Cliente.GIAPMO = new GIAPMO();
+        NavigationManager.NavigateTo("GIA/PMO");
+        //NavigationManager.NavigateTo("GIAPMO");
+    }
+
+    private void navegarAIoT()
+    {
+        //Cliente.GIAIoT = new GIAIoT();
+        NavigationManager.NavigateTo("GIA/IoT");
+        //NavigationManager.NavigateTo("GIAIoT");
+    }
+
+    private void navegarACiberSeguridad()
+    {
+        //Cliente.GIACiberSeguridad = new GIACiberSeguridad();
+        NavigationManager.NavigateTo("GIA/ciberSeguridad");
+        //NavigationManager.NavigateTo("GIACiberSeguridad");
+    }
+
+}
+

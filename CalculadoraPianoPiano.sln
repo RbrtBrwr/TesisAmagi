@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculadoraPianoPiano.Server", "CalculadoraPianoPiano\Server\CalculadoraPianoPiano.Server.csproj", "{AAD6DD74-258F-472F-945D-5F3297905C47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculadoraPianoPiano.Client", "CalculadoraPianoPiano\Client\CalculadoraPianoPiano.Client.csproj", "{48D87110-1FC9-4ECC-99BA-C24AFE6F28B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculadoraPianoPiano.Shared", "CalculadoraPianoPiano\Shared\CalculadoraPianoPiano.Shared.csproj", "{4D23CBC0-299B-4671-96F7-7E7AA1B941CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAD6DD74-258F-472F-945D-5F3297905C47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD6DD74-258F-472F-945D-5F3297905C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD6DD74-258F-472F-945D-5F3297905C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD6DD74-258F-472F-945D-5F3297905C47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D87110-1FC9-4ECC-99BA-C24AFE6F28B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D87110-1FC9-4ECC-99BA-C24AFE6F28B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D87110-1FC9-4ECC-99BA-C24AFE6F28B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D87110-1FC9-4ECC-99BA-C24AFE6F28B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D23CBC0-299B-4671-96F7-7E7AA1B941CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D23CBC0-299B-4671-96F7-7E7AA1B941CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D23CBC0-299B-4671-96F7-7E7AA1B941CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D23CBC0-299B-4671-96F7-7E7AA1B941CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7185B35B-4B93-4C8A-9544-D8534A0DCE34}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+﻿@inherits LayoutComponentBase
+@using CalculadoraPianoPiano.Shared
+
+<CascadingValue Value="@nuevoCliente">
+    @Body
+</CascadingValue>
+
+@code
+{
+    private Cliente nuevoCliente = new Cliente();
+}
+
