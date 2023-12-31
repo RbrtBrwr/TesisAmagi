@@ -1,3 +1,13 @@
 ﻿<div>
     <h2>Esta es la pagina de GIA PMO</h2>
+    <p>Sector @nuevoCliente.InfoCliente.Sector</p>
+    <p>Nombre @nuevoCliente.InfoCliente.Nombre</p>
+    <p>Madurez @nuevoCliente.InfoCliente.Madurez</p>
 </div>
+
+@code
+{
+
+    [CascadingParameter]
+    public Cliente? nuevoCliente { get; set; }
+}
