@@ -1,0 +1,28 @@
+﻿<div class="sidebar">
+    <h2>Este es el sidebar en donde vamos a ir montando la informacion de los servicios del cliente</h2>
+    @if (nuevoCliente != null)
+    {
+        <h3>Cliente: @nuevoCliente.InfoCliente.Nombre</h3>
+        <h3>Sector: @nuevoCliente.InfoCliente.Sector</h3>
+        <h3>Madurez: @nuevoCliente.InfoCliente.Madurez</h3>
+    }
+</div>
+
+<style>
+    .sidebar {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        height: 90%;
+        width: 20%;
+        border: outset;
+        margin: 0;
+    }
+</style>
+
+@code
+{
+
+    [CascadingParameter]
+    public Cliente? nuevoCliente { get; set; }
+}

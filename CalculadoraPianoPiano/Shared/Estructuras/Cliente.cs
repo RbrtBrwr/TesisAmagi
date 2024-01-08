@@ -4,10 +4,11 @@ namespace CalculadoraPianoPiano.Shared
     public class Cliente
     {
         public InfoCliente InfoCliente { get; set; }
-        //public GIATIC? GIATIC { get; set; }
-        //public GIAPMO? GIAPMO { get; set; }
-        //public GIAIoT? GIAIoT { get; set; }
-        //public GIACiberSeguridad? GIACiberSeguridad { get; set; }
+        public GIASabor GIATIC { get; set; }
+        public GIASabor GIAPMO { get; set; }
+        public GIASabor GIAIoT { get; set; }
+        public GIASabor GIACiberSeguridad { get; set; }
+
 
         public Cliente()
         {

@@ -1,7 +1,10 @@
 ﻿@inherits LayoutComponentBase
 @using CalculadoraPianoPiano.Shared
+@using CalculadoraPianoPiano.Client.Components
 
 <CascadingValue Value="@nuevoCliente">
+    <Topbar></Topbar>
+    <Sidebar></Sidebar>
     @Body
 </CascadingValue>
 

@@ -12,6 +12,11 @@ namespace CalculadoraPianoPiano.Shared
             ListaOngoing = new List<Ongoing>();
         }
 
-	}
+        //public checkIfNewSetupInList(Setup nuevoSetup, ListasSabores)
+        //{
+
+        //}
+
+    }
 }
 

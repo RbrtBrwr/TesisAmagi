@@ -1,13 +1,319 @@
-﻿<div>
+﻿@inject NavigationManager NavigationManager
+
+
+<div>
     <h2>Esta es la pagina de GIA TIC</h2>
     <p>Sector @nuevoCliente.InfoCliente.Sector</p>
     <p>Nombre @nuevoCliente.InfoCliente.Nombre</p>
     <p>Madurez @nuevoCliente.InfoCliente.Madurez</p>
 </div>
 
-@code
-{
+<PageTitle>GIA TIC</PageTitle>
+
+<h3>GIA TIC</h3>
+<div class="main">
+    <div class="section" style="display: block;">
+        <h2>Equipos Telecomunicaciones</h2>
+        <select @bind="equiposTelcoDropdown" style="display: block;">
+            @foreach (var option in equiposTelcoOptions)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <input type="number" @bind="cantidadEquiposTelco" style="display: block;" />
+        <select @bind="actualizacionEquiposTelcoDropdown" style="display: block;">
+            @foreach (var option in actualizacion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <select @bind="distribucionEquiposTelcoDropdown" style="display: block;">
+            @foreach (var option in distribucion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <select @bind="atencionEquiposTelcoDropdown" style="display: block;">
+            @foreach (var option in atencion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <button @onclick="AgregarATelco" style="display: block;">Agregar Equipos</button>
+    </div>
+
+    <div class="section" style="display: block;">
+        <h2>Bases de Datos</h2>
+        <select @bind="basesDeDatosDropdown" style="display: block;">
+            @foreach (var option in basesDeDatos)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <input type="number" @bind="cantidadBasesDeDatos" style="display: block;" />
+        <select @bind="actualizacionBasesDeDatosDropdown" style="display: block;">
+            @foreach (var option in actualizacion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <select @bind="distribucionBasesDeDatosDropdown" style="display: block;">
+            @foreach (var option in distribucion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <select @bind="atencionBasesDeDatosDropdown" style="display: block;">
+            @foreach (var option in atencion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <button @onclick="AgregarABasesDeDatos" style="display: block;">Agregar Bases de Datos</button>
+    </div>
+
+    <div class="section" style="display: block;">
+        <h2>Servidores Fisicos</h2>
+        <select @bind="servidoresDropdown" style="display: block;">
+            @foreach (var option in servidores)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <input type="number" @bind="cantidadServidoresFisicos" style="display: block;" />
+        <select @bind="actualizacionServidoresFisicosDropdown" style="display: block;">
+            @foreach (var option in actualizacion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <select @bind="distribucionServidoresFisicosDropdown" style="display: block;">
+            @foreach (var option in distribucion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <select @bind="atencionServidoresFisicosDropdown" style="display: block;">
+            @foreach (var option in atencion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <button @onclick="AgregarAServidoresFisicos" style="display: block;">Agregar Servidores</button>
+    </div>
+
+    <div class="section" style="display: block;">
+        <h2 style="display: block;">Servidores Virtuales</h2>
+        <select @bind="servidoresDropdown" style="display: block;">
+            @foreach (var option in servidores)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <input type="number" @bind="cantidadServidoresVirtuales" style="display: block;" />
+        <select @bind="actualizacionServidoresVirtualesDropdown" style="display: block;">
+            @foreach (var option in actualizacion)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <button @onclick="AgregarAServidoresVirtuales" style="display: block;">Agregar Servidores</button>
+    </div>
+
+    <div class="section" style="display: block;">
+        <h2 style="display: block;">Plataformas Centralizadas</h2>
+        <select @bind="centralizadasDropdown" style="display: block;">
+            @foreach (var option in plataformasCentralizadas)
+                {
+                <option value="@option">@option</option>
+                }
+        </select>
+        <input type="number" @bind="cantidadCentralizadas" style="display: block;" />
+        <button @onclick="AgregarAPlataformasCentralizadas" style="display: block;">Agregar Plataformas Centralizadas</button>
+    </div>
+
+</div>
+<div>
+    <button @onclick='() => NavigationManager.NavigateTo("resumenServicioTIC")'>Continue</button>
+    <button @onclick='() => NavigationManager.NavigateTo("seleccionDeSabores")'>Regresar a Seleccion de Sabores</button>
+</div>
+
+
+<!-- Repeat the above structure for Section 3 and Section 4 -->
+
+@code {
 
     [CascadingParameter]
     public Cliente? nuevoCliente { get; set; }
+
+    private string? equiposTelcoDropdown;
+    private int cantidadEquiposTelco;
+    private string? actualizacionEquiposTelcoDropdown;
+    private string? distribucionEquiposTelcoDropdown;
+    private string? atencionEquiposTelcoDropdown;
+
+
+    private string? basesDeDatosDropdown;
+    private int cantidadBasesDeDatos;
+    private string? actualizacionBasesDeDatosDropdown;
+    private string? distribucionBasesDeDatosDropdown;
+    private string? atencionBasesDeDatosDropdown;
+
+    private string? servidoresDropdown;
+    private int cantidadServidoresFisicos;
+    private string? actualizacionServidoresFisicosDropdown;
+    private string? distribucionServidoresFisicosDropdown;
+    private string? atencionServidoresFisicosDropdown;
+
+    private string? actualizacionServidoresVirtualesDropdown;
+    private int cantidadServidoresVirtuales;
+
+    private string? centralizadasDropdown;
+    private int cantidadCentralizadas;
+
+
+    ////TODO: esto es una prueba, despues tengo que jalarlo de la base de datos
+    //VariablesTIC variablesTIC = new VariablesTIC(equiposTelco, basesDeDatos, servidores, plataformasCentralizadas, nubes);
+    //public Dictionary<string, Tuple<double>> equiposTelco;
+    //equiposTelco.Add("Switches Cisco", Tuple.Create(1.0,1.0));
+
+    //TODO: Creo que necesito hacer un diccionario gigante con todas estas opciones y el valor de la variable de servicio,
+    //pero creo que esa es informacion que tengo que sacar de la base de datos.
+    //Quizas crear una clase de una vez? a donde voy a deserializar el JSON?
+    //No podre deserializar de json a diccionario de una? no porque son estaticos. A menos de que le ponga la estructura de datos completa de una.???
+
+    private List<string> equiposTelcoOptions = new List<string> { "Equipo", "Switches Cisco", "Switches Otros", "Routers TP-Link", "Routers Ubiquity", "Routers Otros", "Firewalls Fortinet", "Firewalls Otros", "Centrales Avaya", "Centrales Otros", "Centrales Otros" };
+    private List<string> basesDeDatos = new List<string> { "Base de Datos", "SQL", "SQL Nueva", "Oracle", "Oracle Nueva", "Otras", "Otras Nueva" };
+    private List<string> servidores = new List<string> { "Servidor", "Servidor Windows Previo 2012", "Servidor Windows Post 2012 No Actualizado", "Servidor Windows Actualizado", "Servidor Unix Previo 2012", "Servidor Unix Post 2012 No Actualizado", "Servidor Unix Actualizado", "Servidor Otros No Actualizado", "Servidor Otros Actualizado", "Servidor Otros Nuevo", "Servidor Windows Nuevo", "Servidor Unix Nuevo" };
+    private List<string> plataformasCentralizadas = new List<string> { "Equipo", "AS400" };
+    private List<string> actualizacion = new List<string> { "Nivel de Actualizacion", "Actualizacion Baja", "Actualizacion Parcial", "Actualizacion Completa" };
+    private List<string> nubes = new List<string> { "Nube", "AWS", "Azure", "Google", "Otro", "Mixto" };
+    private List<string> distribucion = new List<string> { "Distribucion", "Centralizado", "Parcialmente Centralizado", "No Centralizado" };
+    private List<string> atencion = new List<string> { "Atencion", "Servicio On-Site", "Servicio Remoto", "Servicio Hibrido" };
+    private List<string> estabilizacion = new List<string> { "Estabilizacion", "Estabilizacion Baja", "Estabilizacion Media", "Estabilizacion Alta" };
+
+
+    @* TODO: EN TODOS LOS BOTONES Si lo que quieren ingresar ya esta, mostrar un mensaje
+        tambien, resetear los valores cuando se presiona el boton y verificar que hayan datos ingresados*@
+    // TODO: Creo que en vez de poner solo el tipo de equipo y todos los datos referentes a variables de servicio
+    //puedo agregar las variables de servicio de una.
+    private void AgregarATelco()
+    {
+        Setup nuevoSetup = new Setup("TIC")
+        {
+            TipoEquipo = equiposTelcoDropdown,
+            Cantidad = cantidadEquiposTelco,
+            Actualizacion = actualizacionEquiposTelcoDropdown,
+            Distribucion = distribucionEquiposTelcoDropdown,
+            Atencion = atencionEquiposTelcoDropdown
+        };
+
+        Dictionary<string, double> variablesDeServicio = new Dictionary<string, double>();
+
+
+        //if (nuevoCliente.GIATIC.ListaSabor.checkIfNewSetupInList(nuevoSetup, nuevoCliente.GIASabor.ListasSabores.ListaSetupTelecomunicaciones))
+        //{
+        //    // TODO: Quiero un popup que avise que ya se agrego esto a los Servicios
+        //    Console.WriteLine("Ya esta");
+        //}
+        //else
+        //{
+        //    nuevoCliente.GIASabor.ListasSabores.ListaSetupTelecomunicaciones.Add(nuevoSetup);
+        //}
+
+    }
+
+    private void AgregarABasesDeDatos()
+    {
+        Setup nuevoSetup = new Setup("TIC")
+        {
+            TipoEquipo = basesDeDatosDropdown,
+            Cantidad = cantidadBasesDeDatos,
+            Actualizacion = actualizacionBasesDeDatosDropdown,
+            Distribucion = distribucionBasesDeDatosDropdown,
+            Atencion = atencionBasesDeDatosDropdown
+        };
+
+        //if (nuevoCliente.GIASabor.ListasSabores.checkIfNewSetupInList(nuevoSetup, nuevoCliente.GIASabor.ListasSabores.ListaSetupBasesDeDatos))
+        //{
+        //    // TODO: Quiero un popup que avise que ya se agrego esto a los Servicios
+        //    Console.WriteLine("Ya esta");
+        //}
+        //else
+        //{
+        //    nuevoCliente.GIASabor.ListasSabores.ListaSetupBasesDeDatos.Add(nuevoSetup);
+        //}
+    }
+
+    private void AgregarAServidoresFisicos()
+    {
+        Setup nuevoSetup = new Setup("TIC")
+        {
+            TipoEquipo = servidoresDropdown,
+            Cantidad = cantidadServidoresFisicos,
+            Actualizacion = actualizacionServidoresFisicosDropdown,
+            Distribucion = distribucionServidoresFisicosDropdown,
+            Atencion = atencionServidoresFisicosDropdown
+        };
+
+        //if (nuevoCliente.GIASabor.ListasSabores.checkIfNewSetupInList(nuevoSetup, Cliente.GIASabor.ListasSabores.ListaSetupServidoresFisicos))
+        //{
+        //    // TODO: Quiero un popup que avise que ya se agrego esto a los Servicios
+        //    Console.WriteLine("Ya esta");
+        //}
+        //else
+        //{
+        //    nuevoCliente.GIASabor.ListasSabores.ListaSetupServidoresFisicos.Add(nuevoSetup);
+        //}
+
+    }
+
+    private void AgregarAServidoresVirtuales()
+    {
+        Setup nuevoSetup = new Setup("TIC")
+        {
+            TipoEquipo = servidoresDropdown,
+            Cantidad = cantidadServidoresVirtuales,
+            Actualizacion = actualizacionServidoresVirtualesDropdown,
+            Distribucion = "Centralizado",
+            Atencion = "Servicio Remoto"
+        };
+
+        //if (nuevoCliente.GIASabor.ListasSabores.checkIfNewSetupInList(nuevoSetup, Cliente.GIASabor.ListasSabores.ListaSetupServidoresVirtuales))
+        //{
+        //    // TODO: Quiero un popup que avise que ya se agrego esto a los Servicios
+        //    Console.WriteLine("Ya esta");
+        //}
+        //else
+        //{
+        //    nuevoCliente.GIASabor.ListasSabores.ListaSetupServidoresVirtuales.Add(nuevoSetup);
+        //}
+
+    }
+
+    private void AgregarAPlataformasCentralizadas()
+    {
+        Setup nuevoSetup = new Setup("TIC")
+        {
+            //TODO: A esto le faltan campos
+            TipoEquipo = centralizadasDropdown,
+            Cantidad = cantidadCentralizadas,
+            Actualizacion = "No Aplica",
+            Distribucion = "Centralizado",
+            Atencion = "Servicio Remoto",
+            Estabilizacion = "Estabilizacion Baja",
+            Contrato = "No Aplica"
+        };
+
+        //if (nuevoCliente.GIASabor.ListasSabores.checkIfNewSetupInList(nuevoSetup, Cliente.GIASabor.ListasSabores.ListaSetupPlataformasCentralizadas))
+        //{
+        //    // TODO: Quiero un popup que avise que ya se agrego esto a los Servicios
+        //    Console.WriteLine("Ya esta");
+        //}
+        //else
+        //{
+        //    nuevoCliente.GIASabor.ListasSabores.ListaSetupPlataformasCentralizadas.Add(nuevoSetup);
+        //}
+
+    }
 }

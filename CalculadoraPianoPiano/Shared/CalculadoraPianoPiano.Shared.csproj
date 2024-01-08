@@ -9,4 +9,10 @@
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Estructuras\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Estructuras\" />
+  </ItemGroup>
 </Project>
