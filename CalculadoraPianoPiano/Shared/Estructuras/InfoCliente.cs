@@ -8,8 +8,11 @@ namespace CalculadoraPianoPiano.Shared
         public string Madurez { get; set; }
 
     
-        public InfoCliente()
+        public InfoCliente(string nombre, string sector, string madurez)
 		{
+            Nombre = nombre;
+            Sector = sector;
+            Madurez = madurez;
 		}
 	}
 }

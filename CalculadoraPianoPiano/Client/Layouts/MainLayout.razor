@@ -1,0 +1,28 @@
+﻿@inherits LayoutComponentBase
+@using CalculadoraPianoPiano.Shared
+@using CalculadoraPianoPiano.Client.Components
+
+<CascadingValue Value="@nuevoCliente">
+    @*<Topbar></Topbar>*@
+    @if (nuevoCliente.InfoCliente != null)
+    {
+        <Sidebar></Sidebar>
+
+    }
+    <div class="main">
+        @Body
+    </div>
+</CascadingValue>
+
+@*TODO: No tengo la mas minima idea de lo que estoy haciendo, por que el body esta detras de todo lo demas?*@
+<style>
+    .main {
+        align-self:center;
+    }
+</style>
+
+@code
+{
+    private Cliente nuevoCliente = new Cliente();
+}
+

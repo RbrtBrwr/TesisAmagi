@@ -29,8 +29,10 @@
 
   <ItemGroup>
     <None Remove="Components\" />
+    <None Remove="Layouts\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Components\" />
+    <Folder Include="Layouts\" />
   </ItemGroup>
 </Project>

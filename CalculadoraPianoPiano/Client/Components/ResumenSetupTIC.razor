@@ -1,0 +1,27 @@
+﻿@inject NavigationManager NavigationManager
+
+
+<div>
+    <h2>Esta es la pagina de Resumen Setup GIA TIC</h2>
+    <p>Sector @nuevoCliente.InfoCliente.Sector</p>
+    <p>Nombre @nuevoCliente.InfoCliente.Nombre</p>
+    <p>Madurez @nuevoCliente.InfoCliente.Madurez</p>
+</div>
+
+<PageTitle>Resumen Setup GIA TIC</PageTitle>
+
+<h3>Resumen Setup GIA TIC</h3>
+<div class="main">
+    
+
+</div>
+
+
+
+@code {
+
+    [CascadingParameter]
+    public Cliente? nuevoCliente { get; set; }
+
+    
+}

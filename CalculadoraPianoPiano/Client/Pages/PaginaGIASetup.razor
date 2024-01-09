@@ -1,20 +1,27 @@
-﻿@page "/GIA/{sabor}"
+﻿@page "/GIASetup/{sabor}"
 @inject NavigationManager NavigationManager
 @using CalculadoraPianoPiano.Shared
 
 @switch (sabor)
 {
     case "TIC":
-        <GIATIC/>
+        <GIATICSetup />
+        <button @onclick='() => NavigationManager.NavigateTo("resumenSetup/TIC")'>Continuar</button>
         break;
     case "PMO":
-        <GIAPMO/>
+        <GIAPMOSetup />
+        <button @onclick='() => NavigationManager.NavigateTo("resumenSetup/PMO")'>Continuar</button>
+
         break;
     case "ciberSeguridad":
-        <GIACiberSeguridad/>
+        <GIACiberSeguridadSetup />
+        <button @onclick='() => NavigationManager.NavigateTo("resumenSetup/CiberSeguridad")'>Continuar</button>
+
         break;
     case "IoT":
-        <GIAIoT/>
+        <GIAIoTSetup />
+        <button @onclick='() => NavigationManager.NavigateTo("resumenSetup/IoT")'>Continuar</button>
+
         break;
     default:
         <h1>Problema</h1>
@@ -40,6 +47,4 @@
         Console.WriteLine(test);
         Console.WriteLine(sabor);
     }
-
-
 }

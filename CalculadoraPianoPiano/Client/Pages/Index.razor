@@ -54,11 +54,10 @@
 
     private void GuardarYContinuar()
     {
-        if (nombreCliente != null && sectorCliente != null && madurezCliente != null || sectorCliente == "Seleccionar Sector" || madurezCliente == "Seleccionar Madurez")
+        if (nuevoCliente != null && nombreCliente != null && sectorCliente != null && madurezCliente != null || sectorCliente == "Seleccionar Sector" || madurezCliente == "Seleccionar Madurez")
         {
-            nuevoCliente.InfoCliente.Nombre = nombreCliente;
-            nuevoCliente.InfoCliente.Sector = sectorCliente;
-            nuevoCliente.InfoCliente.Madurez = madurezCliente;
+            InfoCliente nuevaInformacion = new InfoCliente(nombreCliente, sectorCliente, madurezCliente);
+            nuevoCliente.InfoCliente = nuevaInformacion;
             NavigationManager.NavigateTo("/seleccionDeSabores");
         }
         else
