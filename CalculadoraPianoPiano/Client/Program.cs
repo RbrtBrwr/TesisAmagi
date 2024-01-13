@@ -14,6 +14,7 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().Cre
 
 var cliente = new Cliente();
 builder.Services.AddSingleton(cliente);
+builder.Services.AddAntDesign();
 
 await builder.Build().RunAsync();
 
