@@ -15,7 +15,7 @@
     <div class="section" style="display: block;">
         <h2>Equipos Telecomunicaciones</h2>
         <select @bind="equiposTelcoDropdown" style="display: block;">
-            @foreach (var option in equiposTelcoOptions)
+            @foreach (var option in VS_TIC_Telecomunicaciones_Setup.getVariables())
                 {
                 <option value="@option">@option</option>
                 }
@@ -39,7 +39,7 @@
                 <option value="@option">@option</option>
                 }
         </select>
-        @*<button @onclick="AgregarATelco" style="display: block;">Agregar Equipos</button>*@
+        <button @onclick="AgregarATelco" style="display: block;">Agregar Equipos</button>
     </div>
 
     <div class="section" style="display: block;">
@@ -69,12 +69,12 @@
                 <option value="@option">@option</option>
                 }
         </select>
-        @*<button @onclick="AgregarABasesDeDatos" style="display: block;">Agregar Bases de Datos</button>*@
+        <button @onclick="AgregarABasesDeDatos" style="display: block;">Agregar Bases de Datos</button>
     </div>
 
     <div class="section" style="display: block;">
         <h2>Servidores Fisicos</h2>
-        <select @bind="servidoresDropdown" style="display: block;">
+        <select @bind="servidoresFisicosDropdown" style="display: block;">
             @foreach (var option in servidores)
                 {
                 <option value="@option">@option</option>
@@ -99,12 +99,12 @@
                 <option value="@option">@option</option>
                 }
         </select>
-        @*<button @onclick="AgregarAServidoresFisicos" style="display: block;">Agregar Servidores</button>*@
+        <button @onclick="AgregarAServidoresFisicos" style="display: block;">Agregar Servidores</button>
     </div>
 
     <div class="section" style="display: block;">
         <h2 style="display: block;">Servidores Virtuales</h2>
-        <select @bind="servidoresDropdown" style="display: block;">
+        <select @bind="servidoresVirtualesDropdown" style="display: block;">
             @foreach (var option in servidores)
                 {
                 <option value="@option">@option</option>
@@ -117,19 +117,43 @@
                 <option value="@option">@option</option>
                 }
         </select>
-        @*<button @onclick="AgregarAServidoresVirtuales" style="display: block;">Agregar Servidores</button>*@
+        <button @onclick="AgregarAServidoresVirtuales" style="display: block;">Agregar Servidores</button>
     </div>
 
     <div class="section" style="display: block;">
         <h2 style="display: block;">Plataformas Centralizadas</h2>
         <select @bind="centralizadasDropdown" style="display: block;">
             @foreach (var option in plataformasCentralizadas)
-                {
+            {
                 <option value="@option">@option</option>
-                }
+            }
         </select>
         <input type="number" @bind="cantidadCentralizadas" style="display: block;" />
-        @*<button @onclick="AgregarAPlataformasCentralizadas" style="display: block;">Agregar Plataformas Centralizadas</button>*@
+        <select @bind="actualizacionCentralizadasDropdown" style="display: block;">
+            @foreach (var option in actualizacion)
+            {
+                <option value="@option">@option</option>
+            }
+        </select>
+        <select @bind="atencionCentralizadasDropdown" style="display: block;">
+            @foreach (var option in atencion)
+            {
+                <option value="@option">@option</option>
+            }
+        </select>
+        <select @bind="distribucionCentralizadasDropdown" style="display: block;">
+            @foreach (var option in distribucion)
+            {
+                <option value="@option">@option</option>
+            }
+        </select>
+        <select @bind="contratoCentralizadasDropdown" style="display: block;">
+            @foreach (var option in contratos)
+            {
+                <option value="@option">@option</option>
+            }
+        </select>
+        <button @onclick="AgregarAPlataformasCentralizadas" style="display: block;">Agregar Plataformas Centralizadas</button>
     </div>
 
 </div>
@@ -137,6 +161,7 @@
 
 
 @code {
+
 
     public List<Setup>? listaSetupInicial;
 
@@ -156,7 +181,8 @@
     private string? distribucionBasesDeDatosDropdown;
     private string? atencionBasesDeDatosDropdown;
 
-    private string? servidoresDropdown;
+    private string? servidoresFisicosDropdown;
+    private string? servidoresVirtualesDropdown;
     private int cantidadServidoresFisicos;
     private string? actualizacionServidoresFisicosDropdown;
     private string? distribucionServidoresFisicosDropdown;
@@ -167,19 +193,13 @@
 
     private string? centralizadasDropdown;
     private int cantidadCentralizadas;
+    private string? actualizacionCentralizadasDropdown;
+    private string? distribucionCentralizadasDropdown;
+    private string? atencionCentralizadasDropdown;
+    private string? contratoCentralizadasDropdown;
 
-
-    ////TODO: esto es una prueba, despues tengo que jalarlo de la base de datos
-    //VariablesTIC variablesTIC = new VariablesTIC(equiposTelco, basesDeDatos, servidores, plataformasCentralizadas, nubes);
-    //public Dictionary<string, Tuple<double>> equiposTelco = new Dictionary<string, Tuple<double>> { "Switches Cisco", Tuple.Create(1.0, 1.0) };
-    //equiposTelco.Add("Switches Cisco", Tuple.Create(1.0,1.0));
-
-    //TODO: Creo que necesito hacer un diccionario gigante con todas estas opciones y el valor de la variable de servicio,
-    //pero creo que esa es informacion que tengo que sacar de la base de datos.
-    //Quizas crear una clase de una vez? a donde voy a deserializar el JSON?
-    //No podre deserializar de json a diccionario de una? no porque son estaticos. A menos de que le ponga la estructura de datos completa de una.???
-
-    private List<string> equiposTelcoOptions = new List<string> { "Equipo", "Switches Cisco", "Switches Otros", "Routers TP-Link", "Routers Ubiquity", "Routers Otros", "Firewalls Fortinet", "Firewalls Otros", "Centrales Avaya", "Centrales Otros", "Centrales Otros" };
+    //TODO: no se por que esto tiene que estar static, creo que despues puedo solucionar eso con la api??
+    private static List<string> equiposTelcoOptions = new List<string> { "Equipo", "Switches Cisco", "Switches Otros", "Routers TP-Link", "Routers Ubiquity", "Routers Otros", "Firewalls Fortinet", "Firewalls Otros", "Centrales Avaya", "Centrales Otros", "Centrales Otros" };
     private List<string> basesDeDatos = new List<string> { "Base de Datos", "SQL", "SQL Nueva", "Oracle", "Oracle Nueva", "Otras", "Otras Nueva" };
     private List<string> servidores = new List<string> { "Servidor", "Servidor Windows Previo 2012", "Servidor Windows Post 2012 No Actualizado", "Servidor Windows Actualizado", "Servidor Unix Previo 2012", "Servidor Unix Post 2012 No Actualizado", "Servidor Unix Actualizado", "Servidor Otros No Actualizado", "Servidor Otros Actualizado", "Servidor Otros Nuevo", "Servidor Windows Nuevo", "Servidor Unix Nuevo" };
     private List<string> plataformasCentralizadas = new List<string> { "Equipo", "AS400" };
@@ -188,21 +208,74 @@
     private List<string> distribucion = new List<string> { "Distribucion", "Centralizado", "Parcialmente Centralizado", "No Centralizado" };
     private List<string> atencion = new List<string> { "Atencion", "Servicio On-Site", "Servicio Remoto", "Servicio Hibrido" };
     private List<string> estabilizacion = new List<string> { "Estabilizacion", "Estabilizacion Baja", "Estabilizacion Media", "Estabilizacion Alta" };
-
-
-    @* TODO: EN TODOS LOS BOTONES Si lo que quieren ingresar ya esta, mostrar un mensaje
-        tambien, resetear los valores cuando se presiona el boton y verificar que hayan datos ingresados*@
-    // TODO: Creo que en vez de poner solo el tipo de equipo y todos los datos referentes a variables de servicio
-    //puedo agregar las variables de servicio de una.
+    private List<string> contratos = new List<string> { "Sin Contrato", "Contrato de Software", "Contrato de Hardware", "Contrato de Actualizacion", "Contrato Secundario", "Contrato Completo" };
 
 
 
+    public VariablesDeServicio VS_TIC_Telecomunicaciones_Setup = new VariablesDeServicio(equiposTelcoOptions);
 
-    //TODO: DICCIONARIO DE PRUEBA TEMPORAL
-    public Dictionary<string, double>? diccionarioPrueba = new Dictionary<string, double>();
-    public void agregarPruebas()
-{
-        diccionarioPrueba.Add()
-}
-    //diccionarioPrueba.Add("SI", 0.2);
+
+    public void AgregarATelco()
+    {
+        Setup nuevoSetupTelco = new Setup("Telco");
+        nuevoSetupTelco.Cantidad = cantidadEquiposTelco;
+        nuevoSetupTelco.TipoEquipo = new Variable(equiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(equiposTelcoDropdown));
+        nuevoSetupTelco.Actualizacion = new Variable(actualizacionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionEquiposTelcoDropdown));
+        nuevoSetupTelco.Distribucion = new Variable(distribucionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(distribucionEquiposTelcoDropdown));
+        nuevoSetupTelco.Atencion = new Variable(atencionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(atencionEquiposTelcoDropdown));
+        nuevoSetupTelco.calcularCostoConEsfuerzo();
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaTelecomunicaciones.Add(nuevoSetupTelco);
+    }
+
+    public void AgregarABasesDeDatos()
+    {
+        Setup nuevoSetupBD = new Setup("Bases de Datos");
+        nuevoSetupBD.Cantidad = cantidadBasesDeDatos;
+        nuevoSetupBD.TipoEquipo = new Variable(basesDeDatosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(basesDeDatosDropdown));
+        nuevoSetupBD.Actualizacion = new Variable(actualizacionBasesDeDatosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionBasesDeDatosDropdown));
+        nuevoSetupBD.Distribucion = new Variable(distribucionBasesDeDatosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(distribucionBasesDeDatosDropdown));
+        nuevoSetupBD.Atencion = new Variable(atencionBasesDeDatosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(atencionBasesDeDatosDropdown));
+        //TODO: estabilizacion bases de datos?
+        nuevoSetupBD.calcularCostoConEsfuerzo();
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaBasesDeDatos.Add(nuevoSetupBD);
+    }
+
+    public void AgregarAServidoresFisicos()
+    {
+        Setup nuevoSetupServidoresFisicos = new Setup("Servidores Fisicos");
+        nuevoSetupServidoresFisicos.Cantidad = cantidadServidoresFisicos;
+        nuevoSetupServidoresFisicos.TipoEquipo = new Variable(servidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(servidoresFisicosDropdown));
+        //TODO: creo que no va actualizacion asi sino solo en el tipo de equipo
+        nuevoSetupServidoresFisicos.Actualizacion = new Variable(actualizacionServidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionServidoresFisicosDropdown));
+        nuevoSetupServidoresFisicos.Distribucion = new Variable(distribucionServidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(distribucionServidoresFisicosDropdown));
+        nuevoSetupServidoresFisicos.Atencion = new Variable(atencionServidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(atencionServidoresFisicosDropdown));
+        //TODO: estabilizacion servidores?
+        nuevoSetupServidoresFisicos.calcularCostoConEsfuerzo();
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresFisicos.Add(nuevoSetupServidoresFisicos);
+    }
+
+    public void AgregarAServidoresVirtuales()
+    {
+        Setup nuevoSetupServidoresFisicos = new Setup("Servidores Virtuales");
+        nuevoSetupServidoresFisicos.Cantidad = cantidadServidoresVirtuales;
+        nuevoSetupServidoresFisicos.TipoEquipo = new Variable(servidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(servidoresFisicosDropdown));
+        //TODO: creo que no va actualizacion asi sino solo en el tipo de equipo
+        nuevoSetupServidoresFisicos.Actualizacion = new Variable(actualizacionServidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionServidoresFisicosDropdown));
+        //TODO: estabilizacion servidores?
+        nuevoSetupServidoresFisicos.calcularCostoConEsfuerzo();
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresVirtuales.Add(nuevoSetupServidoresFisicos);
+    }
+
+    //TODO: Esto esta malisimo jeje
+    public void AgregarAPlataformasCentralizadas()
+    {
+        Setup nuevoSetupTelco = new Setup("Plataformas Centralizadas");
+        nuevoSetupTelco.Cantidad = cantidadEquiposTelco;
+        nuevoSetupTelco.TipoEquipo = new Variable(equiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(equiposTelcoDropdown));
+        nuevoSetupTelco.Actualizacion = new Variable(actualizacionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionEquiposTelcoDropdown));
+        nuevoSetupTelco.Distribucion = new Variable(distribucionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(distribucionEquiposTelcoDropdown));
+        nuevoSetupTelco.Atencion = new Variable(atencionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(atencionEquiposTelcoDropdown));
+        nuevoSetupTelco.calcularCostoConEsfuerzo();
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaPlataformasCentralizadas.Add(nuevoSetupTelco);
+    }
 }

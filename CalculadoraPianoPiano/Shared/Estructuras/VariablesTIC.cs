@@ -1,4 +1,5 @@
-﻿using System;
+﻿/// Creo que ya no lo estoy usando
+using System;
 namespace CalculadoraPianoPiano.Shared
 {
 	public class VariablesTIC

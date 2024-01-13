@@ -1,13 +1,14 @@
-﻿using System;
-namespace CalculadoraPianoPiano.Shared
-{
-	public class GIASabor
-	{
-		public ListasSabores ListaSabor { get; set; }
+﻿/// Creo que esto no va
+/// 
+using System;
+namespace CalculadoraPianoPiano.Shared.Estructuras.EstructurasDeListas;
 
-		public GIASabor()
-		{
-		}
+public class GIASabor
+{
+	public ListasSabores ListaSabor { get; set; }
+
+	public GIASabor()
+	{
 	}
 }
 

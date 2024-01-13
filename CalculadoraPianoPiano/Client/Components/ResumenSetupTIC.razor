@@ -12,7 +12,88 @@
 
 <h3>Resumen Setup GIA TIC</h3>
 <div class="main">
-    
+    <div class="sector">
+        <h1>Telecomunicaciones</h1>
+        <ul>
+            @foreach (List<string> servicio in _serviciosTelco)
+            {
+                <li>
+                    @foreach (string s in servicio)
+                    {
+                        <p>@s</p>
+                    }
+                </li>
+            }
+        </ul>
+        <br />
+    </div>
+
+    <div class="sector">
+        <h1>Bases de Datos</h1>
+        <ul>
+            @foreach (List<string> servicio in _serviciosBD)
+            {
+                <li>
+                    @foreach (string s in servicio)
+                    {
+                        <p>@s</p>
+                        
+                    }
+                </li>
+            }
+        </ul>
+        <br />
+
+    </div>
+    <div class="sector">
+        <h1>Servidores Fisicos</h1>
+        <ul>
+            @foreach (List<string> servicio in _serviciosServidoresFisicos)
+            {
+                <li>
+                    @foreach (string s in servicio)
+                    {
+                        <p>@s</p>
+                    }
+                </li>
+            }
+        </ul>
+        <br />
+
+    </div>
+    <div class="sector">
+        <h1>Servidores Virtuales</h1>
+        <ul>
+            @foreach (List<string> servicio in _serviciosServidoresVirtuales)
+            {
+                <li>
+                    @foreach (string s in servicio)
+                    {
+                        <p>@s</p>
+                    }
+                </li>
+            }
+        </ul>
+        <br />
+
+    </div>
+    <div class="sector">
+        <h1>Plataformas Centralizadas</h1>
+        <ul>
+            @foreach (List<string> servicio in _serviciosPlataformasCentralizadas)
+            {
+                <li>
+                    @foreach (string s in servicio)
+                    {
+                        <p>@s</p>
+                    }
+                </li>
+            }
+        </ul>
+        <br />
+
+    </div>
+
 
 </div>
 
@@ -22,6 +103,99 @@
 
     [CascadingParameter]
     public Cliente? nuevoCliente { get; set; }
+    private List<List<string>> _serviciosTelco = new List<List<string>>();
+    private List<List<string>> _serviciosBD = new List<List<string>>();
+    private List<List<string>> _serviciosServidoresFisicos = new List<List<string>>();
+    private List<List<string>> _serviciosServidoresVirtuales = new List<List<string>>();
+    private List<List<string>> _serviciosPlataformasCentralizadas = new List<List<string>>();
 
-    
+    private List<List<string>> getServiciosArea(string area)
+    {
+
+        switch (area)
+        {
+            case "Telecomunicaciones":
+                List<List<string>> serviciosTelco = new List<List<string>>();
+                List<string> nuevoServicio;
+                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaTelecomunicaciones)
+                {
+                    nuevoServicio = new List<string>();
+                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                    nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
+                    nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
+                    nuevoServicio.Add("Costo: " + servicio.Costo);
+                    serviciosTelco.Add(nuevoServicio);
+                }
+                return serviciosTelco;
+            case "Bases de Datos":
+                List<List<string>> serviciosBD = new List<List<string>>();
+                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaBasesDeDatos)
+                {
+                    nuevoServicio = new List<string>();
+                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                    nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
+                    nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
+                    nuevoServicio.Add("Costo: " + servicio.Costo);
+                    serviciosBD.Add(nuevoServicio);
+                }
+                return serviciosBD;
+            case "Servidores Fisicos":
+                List<List<string>> serviciosServidoresFisicos = new List<List<string>>();
+                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresFisicos)
+                {
+                    nuevoServicio = new List<string>();
+                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                    nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
+                    nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
+                    nuevoServicio.Add("Costo: " + servicio.Costo);
+                    serviciosServidoresFisicos.Add(nuevoServicio);
+                }
+                return serviciosServidoresFisicos;
+            case "Servidores Virtuales":
+                List<List<string>> serviciosServidoresVirtuales = new List<List<string>>();
+                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresVirtuales)
+                {
+                    nuevoServicio = new List<string>();
+                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                    nuevoServicio.Add("Costo: " + servicio.Costo);
+                    serviciosServidoresVirtuales.Add(nuevoServicio);
+                }
+                return serviciosServidoresVirtuales;
+            case "Plataformas Centralizadas":
+                List<List<string>> serviciosPlataformasCentralizadas = new List<List<string>>();
+                //TODO: falta todo esto
+                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaPlataformasCentralizadas)
+                {
+                    nuevoServicio = new List<string>();
+                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                    nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
+                    nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
+                    nuevoServicio.Add("Costo: " + servicio.Costo);
+                    serviciosPlataformasCentralizadas.Add(nuevoServicio);
+                }
+                return serviciosPlataformasCentralizadas;
+            default:
+                Console.WriteLine("Error");
+                return new List<List<string>>();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {   
+        _serviciosTelco = getServiciosArea("Telecomunicaciones");
+        _serviciosBD = getServiciosArea("Bases de Datos");
+        _serviciosServidoresFisicos = getServiciosArea("Servidores Fisicos");
+        _serviciosServidoresVirtuales = getServiciosArea("Servidores Virtuales");
+        _serviciosPlataformasCentralizadas = getServiciosArea("Plataformas Centralizadas");
+    }
 }

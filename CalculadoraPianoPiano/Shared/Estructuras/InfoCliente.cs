@@ -1,4 +1,7 @@
-﻿using System;
+﻿/// Informacion del cliente, sector creo que va a ser utilizado para las estimaciones
+/// madurez podria tener una variable de esfuerzo adicional
+/// 
+using System;
 namespace CalculadoraPianoPiano.Shared
 {
     public class InfoCliente

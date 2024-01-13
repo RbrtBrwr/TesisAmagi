@@ -11,8 +11,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Estructuras\" />
+    <None Remove="Estructuras\EstructurasDeListas\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Estructuras\" />
+    <Folder Include="Estructuras\EstructurasDeListas\" />
   </ItemGroup>
 </Project>

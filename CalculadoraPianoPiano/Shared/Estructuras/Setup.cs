@@ -1,41 +1,95 @@
-﻿using System;
+﻿/// La informacion requerida para el setup de un tipo de equipo.
+/// TODO: creo que esta esta bastante dirigida a TIC, voy a tener que refactorear.
+
+using System;
 namespace CalculadoraPianoPiano.Shared
 {
     public class Setup
     {
         public int Cantidad { get; set; }
-        public Tuple<string, double> TipoEquipo { get; set; }
-        public Tuple<string, double>? Actualizacion { get; set; }
-        public Tuple<string, double>? Distribucion { get; set; }
-        public Tuple<string, double>? Atencion { get; set; }
-        public Tuple<string, double>? Contrato { get; set; }
-        public Tuple<string, double>? Estabilizacion { get; set; }
+        public Variable TipoEquipo { get; set; }
+        public Variable Actualizacion { get; set; }
+        public Variable Distribucion { get; set; }
+        public Variable Atencion { get; set; }
+        public Variable Contrato { get; set; }
+        public Variable Estabilizacion { get; set; }
+        public Variable VariableAtencionDistribucion { get; set; }
+        public double Costo { get; set; }
 
         // TODO: variables de servicio
 
-        //public Tuple<string, double> variableEquipo { get; set; }
-        //public Tuple<string, double> variableActualizacion { get; set; }
-        //public Tuple<string, double> variableDistribucion { get; set; }
-        //public Tuple<string, double> variableAtencion { get; set; }
-        //public Tuple<string, double> variableAtencionDistribucion { get; set; }
-        //public Tuple<string, double> variableContrato { get; set; }
-        //public Tuple<string, double> variableEstabilizacion { get; set; }
+        //public Variable variableEquipo { get; set; }
+        //public Variable variableActualizacion { get; set; }
+        //public Variable variableDistribucion { get; set; }
+        //public Variable variableAtencion { get; set; }
+        //public Variable variableAtencionDistribucion { get; set; }
+        //public Variable variableContrato { get; set; }
+        //public Variable variableEstabilizacion { get; set; }
 
 
-        public Setup()
+        public Setup(string sector)
         {
+            Variable variableBase = new Variable("", 1.0);
+            TipoEquipo = Actualizacion = Distribucion = Atencion = Contrato = Estabilizacion = VariableAtencionDistribucion = variableBase;
+
+            //TODO: tengo que tener los costos base por sector para calcular esto.
+            switch (sector)
+            {
+                default:
+                    Costo = 10.0;
+                    break;
+            }
         }
 
-        //public void AgregarVariablesDeServicio(Dictionary<string, double> variablesDeServicio)
-        //{
-        //    variableEquipo = new Tuple<string, double>(variablesDeServicio.ElementAt(0).Key, variablesDeServicio.ElementAt(0).Value);
-        //    variableActualizacion = new Tuple<string, double>(variablesDeServicio.ElementAt(1).Key, variablesDeServicio.ElementAt(1).Value);
-        //    variableDistribucion = new Tuple<string, double>(variablesDeServicio.ElementAt(2).Key, variablesDeServicio.ElementAt(2).Value);
-        //    variableAtencion = new Tuple<string, double>(variablesDeServicio.ElementAt(3).Key, variablesDeServicio.ElementAt(3).Value);
-        //    variableAtencionDistribucion = new Tuple<string, double>(variablesDeServicio.ElementAt(4).Key, variablesDeServicio.ElementAt(4).Value);
-        //    variableContrato = new Tuple<string, double>(variablesDeServicio.ElementAt(5).Key, variablesDeServicio.ElementAt(5).Value);
-        //    variableEstabilizacion = new Tuple<string, double>(variablesDeServicio.ElementAt(6).Key, variablesDeServicio.ElementAt(6).Value);
-        //}
+        public void calcularCostoConEsfuerzo()
+        {
+
+            calcularVariableAtencionDistribucion();
+            double esfuerzoTotal = TipoEquipo.Esfuerzo * Actualizacion.Esfuerzo * Distribucion.Esfuerzo * Atencion.Esfuerzo * Contrato.Esfuerzo * Estabilizacion.Esfuerzo * VariableAtencionDistribucion.Esfuerzo;
+            Costo *= Cantidad;
+            Costo *= esfuerzoTotal;
+            Costo = Double.Round(Costo, 2);
+
+        }
+
+        //TODO: el esfuerzo de estos lo tengo que jalar de algun lado
+        public void calcularVariableAtencionDistribucion()
+        {
+            if (Distribucion.Nombre == "Centralizado" || Atencion.Nombre == "Remoto")
+            {
+                VariableAtencionDistribucion.Nombre = "No Aplica";
+                VariableAtencionDistribucion.Esfuerzo = 1.0;
+            }
+            else if (Distribucion.Nombre == "No Centralizado")
+            {
+                if (Atencion.Nombre == "On-Site")
+                {
+                    VariableAtencionDistribucion.Nombre = "Servicio On-Site No Centralizado";
+                    VariableAtencionDistribucion.Esfuerzo = 1.2;
+                }
+                else
+                {
+                    VariableAtencionDistribucion.Nombre = "Servicio Hibrido No Centralizado";
+                    VariableAtencionDistribucion.Esfuerzo = 1.15;
+                }
+
+            }
+            else
+            {
+                if (Atencion.Nombre == "On-Site")
+                {
+                    VariableAtencionDistribucion.Nombre = "Servicio On-Site Parcialmente Centralizado";
+                    VariableAtencionDistribucion.Esfuerzo = 1.15;
+                }
+                else
+                {
+                    VariableAtencionDistribucion.Nombre = "Servicio Hibrido Parcialmente Centralizado";
+                    VariableAtencionDistribucion.Esfuerzo = 1.1;
+                }
+
+            }
+        }
+
 	}
 }
 

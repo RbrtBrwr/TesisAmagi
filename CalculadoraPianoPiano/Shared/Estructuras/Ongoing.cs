@@ -1,4 +1,6 @@
-﻿using System;
+﻿/// La informacion de los ongoings de cada uno de los tipos?
+
+using System;
 namespace CalculadoraPianoPiano.Shared
 {
     public class Ongoing
