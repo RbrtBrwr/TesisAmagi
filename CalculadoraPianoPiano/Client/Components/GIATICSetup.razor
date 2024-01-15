@@ -15,7 +15,7 @@
     <div class="section" style="display: block;">
         <h2>Equipos Telecomunicaciones</h2>
         <select @bind="equiposTelcoDropdown" style="display: block;">
-            @foreach (var option in VS_TIC_Telecomunicaciones_Setup.getVariables())
+            @foreach (var option in VSTIC.Telecomunicaciones.getVariables())
                 {
                 <option value="@option">@option</option>
                 }
@@ -168,6 +168,9 @@
     [CascadingParameter]
     public Cliente? nuevoCliente { get; set; }
 
+    [CascadingParameter]
+    public ListasSetupTemporales? ListasTemporales { get; set; }
+
     private string? equiposTelcoDropdown;
     private int cantidadEquiposTelco;
     private string? actualizacionEquiposTelcoDropdown;
@@ -211,19 +214,29 @@
     private List<string> contratos = new List<string> { "Sin Contrato", "Contrato de Software", "Contrato de Hardware", "Contrato de Actualizacion", "Contrato Secundario", "Contrato Completo" };
 
 
-
-    public VariablesDeServicio VS_TIC_Telecomunicaciones_Setup = new VariablesDeServicio(equiposTelcoOptions);
+    [CascadingParameter]
+    public VariablesSetupTIC VSTIC { get; set; }
 
 
     public void AgregarATelco()
     {
         Setup nuevoSetupTelco = new Setup("Telco");
         nuevoSetupTelco.Cantidad = cantidadEquiposTelco;
-        nuevoSetupTelco.TipoEquipo = new Variable(equiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(equiposTelcoDropdown));
-        nuevoSetupTelco.Actualizacion = new Variable(actualizacionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionEquiposTelcoDropdown));
-        nuevoSetupTelco.Distribucion = new Variable(distribucionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(distribucionEquiposTelcoDropdown));
-        nuevoSetupTelco.Atencion = new Variable(atencionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(atencionEquiposTelcoDropdown));
+        nuevoSetupTelco.TipoEquipo = new Variable(equiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(equiposTelcoDropdown));
+        nuevoSetupTelco.Actualizacion = new Variable(actualizacionEquiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(actualizacionEquiposTelcoDropdown));
+        nuevoSetupTelco.Distribucion = new Variable(distribucionEquiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(distribucionEquiposTelcoDropdown));
+        nuevoSetupTelco.Atencion = new Variable(atencionEquiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(atencionEquiposTelcoDropdown));
         nuevoSetupTelco.calcularCostoConEsfuerzo();
+        if (ListasTemporales.ListaTICTelecomunicaciones != null)
+        {
+            ListasTemporales.ListaTICTelecomunicaciones.Add(nuevoSetupTelco);
+
+        }
+        else
+        {
+            ListasTemporales.ListaTICTelecomunicaciones = new List<Setup>();
+            ListasTemporales.ListaTICTelecomunicaciones.Add(nuevoSetupTelco);
+        }
         nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaTelecomunicaciones.Add(nuevoSetupTelco);
     }
 
@@ -231,12 +244,22 @@
     {
         Setup nuevoSetupBD = new Setup("Bases de Datos");
         nuevoSetupBD.Cantidad = cantidadBasesDeDatos;
-        nuevoSetupBD.TipoEquipo = new Variable(basesDeDatosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(basesDeDatosDropdown));
-        nuevoSetupBD.Actualizacion = new Variable(actualizacionBasesDeDatosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionBasesDeDatosDropdown));
-        nuevoSetupBD.Distribucion = new Variable(distribucionBasesDeDatosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(distribucionBasesDeDatosDropdown));
-        nuevoSetupBD.Atencion = new Variable(atencionBasesDeDatosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(atencionBasesDeDatosDropdown));
+        nuevoSetupBD.TipoEquipo = new Variable(basesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(basesDeDatosDropdown));
+        nuevoSetupBD.Actualizacion = new Variable(actualizacionBasesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(actualizacionBasesDeDatosDropdown));
+        nuevoSetupBD.Distribucion = new Variable(distribucionBasesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(distribucionBasesDeDatosDropdown));
+        nuevoSetupBD.Atencion = new Variable(atencionBasesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(atencionBasesDeDatosDropdown));
         //TODO: estabilizacion bases de datos?
         nuevoSetupBD.calcularCostoConEsfuerzo();
+        if (ListasTemporales.ListaTICBasesDeDatos != null)
+        {
+            ListasTemporales.ListaTICBasesDeDatos.Add(nuevoSetupBD);
+
+        }
+        else
+        {
+            ListasTemporales.ListaTICBasesDeDatos = new List<Setup>();
+            ListasTemporales.ListaTICBasesDeDatos.Add(nuevoSetupBD);
+        }
         nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaBasesDeDatos.Add(nuevoSetupBD);
     }
 
@@ -244,26 +267,50 @@
     {
         Setup nuevoSetupServidoresFisicos = new Setup("Servidores Fisicos");
         nuevoSetupServidoresFisicos.Cantidad = cantidadServidoresFisicos;
-        nuevoSetupServidoresFisicos.TipoEquipo = new Variable(servidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(servidoresFisicosDropdown));
+        nuevoSetupServidoresFisicos.TipoEquipo = new Variable(servidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(servidoresFisicosDropdown));
         //TODO: creo que no va actualizacion asi sino solo en el tipo de equipo
-        nuevoSetupServidoresFisicos.Actualizacion = new Variable(actualizacionServidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionServidoresFisicosDropdown));
-        nuevoSetupServidoresFisicos.Distribucion = new Variable(distribucionServidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(distribucionServidoresFisicosDropdown));
-        nuevoSetupServidoresFisicos.Atencion = new Variable(atencionServidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(atencionServidoresFisicosDropdown));
+        nuevoSetupServidoresFisicos.Actualizacion = new Variable(actualizacionServidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(actualizacionServidoresFisicosDropdown));
+        nuevoSetupServidoresFisicos.Distribucion = new Variable(distribucionServidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(distribucionServidoresFisicosDropdown));
+        nuevoSetupServidoresFisicos.Atencion = new Variable(atencionServidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(atencionServidoresFisicosDropdown));
         //TODO: estabilizacion servidores?
         nuevoSetupServidoresFisicos.calcularCostoConEsfuerzo();
+
+        if (ListasTemporales.ListaTICServidoresFisicos != null)
+        {
+            ListasTemporales.ListaTICServidoresFisicos.Add(nuevoSetupServidoresFisicos);
+
+        }
+        else
+        {
+            ListasTemporales.ListaTICServidoresFisicos = new List<Setup>();
+            ListasTemporales.ListaTICServidoresFisicos.Add(nuevoSetupServidoresFisicos);
+        }
+
         nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresFisicos.Add(nuevoSetupServidoresFisicos);
     }
 
     public void AgregarAServidoresVirtuales()
     {
-        Setup nuevoSetupServidoresFisicos = new Setup("Servidores Virtuales");
-        nuevoSetupServidoresFisicos.Cantidad = cantidadServidoresVirtuales;
-        nuevoSetupServidoresFisicos.TipoEquipo = new Variable(servidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(servidoresFisicosDropdown));
+        Setup nuevoSetupServidoresVirtuales = new Setup("Servidores Virtuales");
+        nuevoSetupServidoresVirtuales.Cantidad = cantidadServidoresVirtuales;
+        nuevoSetupServidoresVirtuales.TipoEquipo = new Variable(servidoresVirtualesDropdown, VSTIC.ServidoresVirtuales.getEsfuerzoVariable(servidoresVirtualesDropdown));
         //TODO: creo que no va actualizacion asi sino solo en el tipo de equipo
-        nuevoSetupServidoresFisicos.Actualizacion = new Variable(actualizacionServidoresFisicosDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionServidoresFisicosDropdown));
+        nuevoSetupServidoresVirtuales.Actualizacion = new Variable(actualizacionServidoresVirtualesDropdown, VSTIC.ServidoresVirtuales.getEsfuerzoVariable(actualizacionServidoresVirtualesDropdown));
         //TODO: estabilizacion servidores?
-        nuevoSetupServidoresFisicos.calcularCostoConEsfuerzo();
-        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresVirtuales.Add(nuevoSetupServidoresFisicos);
+        nuevoSetupServidoresVirtuales.calcularCostoConEsfuerzo();
+
+        if (ListasTemporales.ListaTICServidoresVirtuales != null)
+        {
+            ListasTemporales.ListaTICServidoresVirtuales.Add(nuevoSetupServidoresVirtuales);
+
+        }
+        else
+        {
+            ListasTemporales.ListaTICServidoresVirtuales = new List<Setup>();
+            ListasTemporales.ListaTICServidoresVirtuales.Add(nuevoSetupServidoresVirtuales);
+        }
+
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresVirtuales.Add(nuevoSetupServidoresVirtuales);
     }
 
     //TODO: Esto esta malisimo jeje
@@ -271,11 +318,23 @@
     {
         Setup nuevoSetupTelco = new Setup("Plataformas Centralizadas");
         nuevoSetupTelco.Cantidad = cantidadEquiposTelco;
-        nuevoSetupTelco.TipoEquipo = new Variable(equiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(equiposTelcoDropdown));
-        nuevoSetupTelco.Actualizacion = new Variable(actualizacionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(actualizacionEquiposTelcoDropdown));
-        nuevoSetupTelco.Distribucion = new Variable(distribucionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(distribucionEquiposTelcoDropdown));
-        nuevoSetupTelco.Atencion = new Variable(atencionEquiposTelcoDropdown, VS_TIC_Telecomunicaciones_Setup.getEsfuerzoVariable(atencionEquiposTelcoDropdown));
+        nuevoSetupTelco.TipoEquipo = new Variable(equiposTelcoDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(equiposTelcoDropdown));
+        nuevoSetupTelco.Actualizacion = new Variable(actualizacionEquiposTelcoDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(actualizacionEquiposTelcoDropdown));
+        nuevoSetupTelco.Distribucion = new Variable(distribucionEquiposTelcoDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(distribucionEquiposTelcoDropdown));
+        nuevoSetupTelco.Atencion = new Variable(atencionEquiposTelcoDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(atencionEquiposTelcoDropdown));
         nuevoSetupTelco.calcularCostoConEsfuerzo();
+
+        if (ListasTemporales.ListaTICPlataformasCentralizadas != null)
+        {
+            ListasTemporales.ListaTICPlataformasCentralizadas.Add(nuevoSetupTelco);
+
+        }
+        else
+        {
+            ListasTemporales.ListaTICPlataformasCentralizadas = new List<Setup>();
+            ListasTemporales.ListaTICPlataformasCentralizadas.Add(nuevoSetupTelco);
+        }
+
         nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaPlataformasCentralizadas.Add(nuevoSetupTelco);
     }
 }

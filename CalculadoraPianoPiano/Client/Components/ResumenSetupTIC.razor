@@ -103,6 +103,40 @@
 
     [CascadingParameter]
     public Cliente? nuevoCliente { get; set; }
+
+    [CascadingParameter]
+    public ListasSetupTemporales? ListasTemporales { get; set; }
+
+    private string? equiposTelcoDropdown;
+    private int cantidadEquiposTelco;
+    private string? actualizacionEquiposTelcoDropdown;
+    private string? distribucionEquiposTelcoDropdown;
+    private string? atencionEquiposTelcoDropdown;
+
+
+    private string? basesDeDatosDropdown;
+    private int cantidadBasesDeDatos;
+    private string? actualizacionBasesDeDatosDropdown;
+    private string? distribucionBasesDeDatosDropdown;
+    private string? atencionBasesDeDatosDropdown;
+
+    private string? servidoresFisicosDropdown;
+    private string? servidoresVirtualesDropdown;
+    private int cantidadServidoresFisicos;
+    private string? actualizacionServidoresFisicosDropdown;
+    private string? distribucionServidoresFisicosDropdown;
+    private string? atencionServidoresFisicosDropdown;
+
+    private string? actualizacionServidoresVirtualesDropdown;
+    private int cantidadServidoresVirtuales;
+
+    private string? centralizadasDropdown;
+    private int cantidadCentralizadas;
+    private string? actualizacionCentralizadasDropdown;
+    private string? distribucionCentralizadasDropdown;
+    private string? atencionCentralizadasDropdown;
+    private string? contratoCentralizadasDropdown;
+
     private List<List<string>> _serviciosTelco = new List<List<string>>();
     private List<List<string>> _serviciosBD = new List<List<string>>();
     private List<List<string>> _serviciosServidoresFisicos = new List<List<string>>();
@@ -117,7 +151,9 @@
             case "Telecomunicaciones":
                 List<List<string>> serviciosTelco = new List<List<string>>();
                 List<string> nuevoServicio;
-                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaTelecomunicaciones)
+                if (ListasTemporales.ListaTICTelecomunicaciones != null)
+            {
+                foreach (Setup servicio in ListasTemporales.ListaTICTelecomunicaciones)
                 {
                     nuevoServicio = new List<string>();
                     nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
@@ -128,10 +164,14 @@
                     nuevoServicio.Add("Costo: " + servicio.Costo);
                     serviciosTelco.Add(nuevoServicio);
                 }
+
+            }
                 return serviciosTelco;
             case "Bases de Datos":
                 List<List<string>> serviciosBD = new List<List<string>>();
-                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaBasesDeDatos)
+                if (ListasTemporales.ListaTICBasesDeDatos != null)
+            {
+                foreach (Setup servicio in ListasTemporales.ListaTICBasesDeDatos)
                 {
                     nuevoServicio = new List<string>();
                     nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
@@ -142,10 +182,14 @@
                     nuevoServicio.Add("Costo: " + servicio.Costo);
                     serviciosBD.Add(nuevoServicio);
                 }
+
+            }
                 return serviciosBD;
             case "Servidores Fisicos":
                 List<List<string>> serviciosServidoresFisicos = new List<List<string>>();
-                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresFisicos)
+                if (ListasTemporales.ListaTICServidoresFisicos != null)
+            {
+                foreach (Setup servicio in ListasTemporales.ListaTICServidoresFisicos)
                 {
                     nuevoServicio = new List<string>();
                     nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
@@ -156,10 +200,14 @@
                     nuevoServicio.Add("Costo: " + servicio.Costo);
                     serviciosServidoresFisicos.Add(nuevoServicio);
                 }
+
+            }
                 return serviciosServidoresFisicos;
             case "Servidores Virtuales":
                 List<List<string>> serviciosServidoresVirtuales = new List<List<string>>();
-                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresVirtuales)
+                if (ListasTemporales.ListaTICServidoresVirtuales != null)
+            {
+                foreach (Setup servicio in ListasTemporales.ListaTICServidoresVirtuales)
                 {
                     nuevoServicio = new List<string>();
                     nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
@@ -168,11 +216,15 @@
                     nuevoServicio.Add("Costo: " + servicio.Costo);
                     serviciosServidoresVirtuales.Add(nuevoServicio);
                 }
+
+            }
                 return serviciosServidoresVirtuales;
             case "Plataformas Centralizadas":
                 List<List<string>> serviciosPlataformasCentralizadas = new List<List<string>>();
                 //TODO: falta todo esto
-                foreach (Setup servicio in nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaPlataformasCentralizadas)
+                if (ListasTemporales.ListaTICPlataformasCentralizadas != null)
+            {
+                foreach (Setup servicio in ListasTemporales.ListaTICPlataformasCentralizadas)
                 {
                     nuevoServicio = new List<string>();
                     nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
@@ -183,6 +235,8 @@
                     nuevoServicio.Add("Costo: " + servicio.Costo);
                     serviciosPlataformasCentralizadas.Add(nuevoServicio);
                 }
+
+            }
                 return serviciosPlataformasCentralizadas;
             default:
                 Console.WriteLine("Error");
@@ -191,7 +245,7 @@
     }
 
     protected override async Task OnInitializedAsync()
-    {   
+    {
         _serviciosTelco = getServiciosArea("Telecomunicaciones");
         _serviciosBD = getServiciosArea("Bases de Datos");
         _serviciosServidoresFisicos = getServiciosArea("Servidores Fisicos");

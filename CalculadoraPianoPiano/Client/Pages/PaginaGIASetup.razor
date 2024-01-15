@@ -1,44 +1,145 @@
 ﻿@page "/GIASetup/{sabor}"
 @inject NavigationManager NavigationManager
 @using CalculadoraPianoPiano.Shared
+<CascadingValue Value="@ListasTemporales">
+    @switch (sabor)
+    {
+        case "TIC":
+                <CascadingValue Value="@VSTIC">
+                    @if (!resumen)
+                    {
+                        <GIATICSetup />
+                        <button @onclick='MostrarResumen'>Continuar</button>
+                    }
+                    else
+                    {
+                        <ResumenSetupTIC />
+                    }
+                </CascadingValue>
 
-@switch (sabor)
-{
-    case "TIC":
-        <GIATICSetup />
-        <button @onclick='() => NavigationManager.NavigateTo("resumenSetup/TIC")'>Continuar</button>
-        break;
-    case "PMO":
-        <GIAPMOSetup />
-        <button @onclick='() => NavigationManager.NavigateTo("resumenSetup/PMO")'>Continuar</button>
+            break;
 
-        break;
-    case "ciberSeguridad":
-        <GIACiberSeguridadSetup />
-        <button @onclick='() => NavigationManager.NavigateTo("resumenSetup/CiberSeguridad")'>Continuar</button>
+        case "PMO":
+            @if (!resumen)
+            {
+                <GIAPMOSetup />
+                <button @onclick='MostrarResumen'>Continuar</button>
+            }
+            else
+            {
+                <p>Falta resumen PMO (PaginaGIASetup)</p>
+                @*<ResumenSetupPMO />*@
+            }
 
-        break;
-    case "IoT":
-        <GIAIoTSetup />
-        <button @onclick='() => NavigationManager.NavigateTo("resumenSetup/IoT")'>Continuar</button>
+            break;
 
-        break;
-    default:
-        <h1>Problema</h1>
-        break;
-}
+        case "ciberSeguridad":
+            @if (!resumen)
+            {
+                <GIACiberSeguridadSetup />
+                <button @onclick='MostrarResumen'>Continuar</button>
+            }
+            else
+            {
+                <p>Falta resumen Ciber Seguridad (PaginaGIASetup)</p>
+                @*<ResumenSetupCiberSeguridad />*@
+            }
 
-<button @onclick='() => NavigationManager.NavigateTo("seleccionDeSabores")'>Regresar a Seleccion de Sabores</button>
+            break;
+
+        case "IoT":
+            @if (!resumen)
+            {
+                <GIAIoTSetup />
+                <button @onclick='MostrarResumen'>Continuar</button>
+            }
+            else
+            {
+                <p>Falta resumen IoT (PaginaGIASetup)</p>
+                @*<ResumenSetupIoT />*@
+            }
+
+            break;
+
+        default:
+            <h1>Problema</h1>
+            break;
+    }
+
+    <button @onclick='() => NavigationManager.NavigateTo("seleccionDeSabores")'>Regresar a Seleccion de Sabores</button>
+</CascadingValue>
 
 
 
 @code
 {
-    [Parameter]
-    public string sabor { get; set; }
+        [Parameter]
+        public string sabor { get; set; }
 
-    [CascadingParameter]
-    public Cliente? nuevoCliente { get; set; }
+        [CascadingParameter]
+        public Cliente? nuevoCliente { get; set; }
+
+        public string? equiposTelcoDropdown;
+        public int cantidadEquiposTelco;
+        private string? actualizacionEquiposTelcoDropdown;
+        private string? distribucionEquiposTelcoDropdown;
+        private string? atencionEquiposTelcoDropdown;
+
+
+        private string? basesDeDatosDropdown;
+        private int cantidadBasesDeDatos;
+        private string? actualizacionBasesDeDatosDropdown;
+        private string? distribucionBasesDeDatosDropdown;
+        private string? atencionBasesDeDatosDropdown;
+
+        private string? servidoresFisicosDropdown;
+        private string? servidoresVirtualesDropdown;
+        private int cantidadServidoresFisicos;
+        private string? actualizacionServidoresFisicosDropdown;
+        private string? distribucionServidoresFisicosDropdown;
+        private string? atencionServidoresFisicosDropdown;
+
+        private string? actualizacionServidoresVirtualesDropdown;
+        private int cantidadServidoresVirtuales;
+
+        private string? centralizadasDropdown;
+        private int cantidadCentralizadas;
+        private string? actualizacionCentralizadasDropdown;
+        private string? distribucionCentralizadasDropdown;
+        private string? atencionCentralizadasDropdown;
+        private string? contratoCentralizadasDropdown;
+
+        //TODO: no se por que esto tiene que estar static, creo que despues puedo solucionar eso con la api??
+        private static List<string> equiposTelcoOptions = new List<string> { "Equipo", "Switches Cisco", "Switches Otros", "Routers TP-Link", "Routers Ubiquity", "Routers Otros", "Firewalls Fortinet", "Firewalls Otros", "Centrales Avaya", "Centrales Otros", "Centrales Otros" };
+        private static List<string> basesDeDatos = new List<string> { "Base de Datos", "SQL", "SQL Nueva", "Oracle", "Oracle Nueva", "Otras", "Otras Nueva" };
+        private static List<string> servidores = new List<string> { "Servidor", "Servidor Windows Previo 2012", "Servidor Windows Post 2012 No Actualizado", "Servidor Windows Actualizado", "Servidor Unix Previo 2012", "Servidor Unix Post 2012 No Actualizado", "Servidor Unix Actualizado", "Servidor Otros No Actualizado", "Servidor Otros Actualizado", "Servidor Otros Nuevo", "Servidor Windows Nuevo", "Servidor Unix Nuevo" };
+        private static List<string> plataformasCentralizadas = new List<string> { "Equipo", "AS400" };
+        private static List<string> actualizacion = new List<string> { "Nivel de Actualizacion", "Actualizacion Baja", "Actualizacion Parcial", "Actualizacion Completa" };
+        private static List<string> nubes = new List<string> { "Nube", "AWS", "Azure", "Google", "Otro", "Mixto" };
+        private static List<string> distribucion = new List<string> { "Distribucion", "Centralizado", "Parcialmente Centralizado", "No Centralizado" };
+        private static List<string> atencion = new List<string> { "Atencion", "Servicio On-Site", "Servicio Remoto", "Servicio Hibrido" };
+        private static List<string> estabilizacion = new List<string> { "Estabilizacion", "Estabilizacion Baja", "Estabilizacion Media", "Estabilizacion Alta" };
+        private static List<string> contratos = new List<string> { "Sin Contrato", "Contrato de Software", "Contrato de Hardware", "Contrato de Actualizacion", "Contrato Secundario", "Contrato Completo" };
+
+
+
+        public VariablesSetupTIC VSTIC = new VariablesSetupTIC {
+            Telecomunicaciones = new VariablesDeServicio(equiposTelcoOptions),
+            BasesDeDatos = new VariablesDeServicio(basesDeDatos),
+            ServidoresFisicos = new VariablesDeServicio(servidores),
+            ServidoresVirtuales = new VariablesDeServicio(servidores),
+            PlataformasCentralizadas = new VariablesDeServicio(plataformasCentralizadas),
+            Actualizacion = new VariablesDeServicio(actualizacion),
+            Nubes = new VariablesDeServicio(nubes),
+            Distribucion = new VariablesDeServicio(distribucion),
+            Atencion = new VariablesDeServicio(atencion),
+            Estabilizacion = new VariablesDeServicio(estabilizacion),
+            Contratos = new VariablesDeServicio(contratos)
+        };
+
+    public ListasSetupTemporales ListasTemporales = new ListasSetupTemporales();
+
+    public bool resumen = false;
 
     protected override void OnParametersSet()
     {
@@ -46,5 +147,11 @@
         var test = nuevoCliente.InfoCliente.Madurez;
         Console.WriteLine(test);
         Console.WriteLine(sabor);
+    }
+
+    private void MostrarResumen()
+    {
+        resumen = true;
+        StateHasChanged();
     }
 }
