@@ -93,6 +93,7 @@
         <br />
 
     </div>
+    <button @onclick="ContinuarAOngoing">Continuar</button>
 
 
 </div>
@@ -142,6 +143,16 @@
     private List<List<string>> _serviciosServidoresFisicos = new List<List<string>>();
     private List<List<string>> _serviciosServidoresVirtuales = new List<List<string>>();
     private List<List<string>> _serviciosPlataformasCentralizadas = new List<List<string>>();
+
+    private void ContinuarAOngoing()
+    {
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaTelecomunicaciones = ListasTemporales.ListaTICTelecomunicaciones;
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaBasesDeDatos = ListasTemporales.ListaTICBasesDeDatos;
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresFisicos = ListasTemporales.ListaTICServidoresFisicos;
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresVirtuales = ListasTemporales.ListaTICServidoresVirtuales;
+        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaPlataformasCentralizadas = ListasTemporales.ListaTICPlataformasCentralizadas;
+        NavigationManager.NavigateTo("/resumenPrueba");
+    }
 
     private List<List<string>> getServiciosArea(string area)
     {
