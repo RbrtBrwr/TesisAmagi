@@ -1,12 +1,12 @@
 ﻿@inject NavigationManager NavigationManager
 
 
-<div>
+@*<div>
     <h2>Esta es la pagina de Resumen Setup GIA TIC</h2>
     <p>Sector @nuevoCliente.InfoCliente.Sector</p>
     <p>Nombre @nuevoCliente.InfoCliente.Nombre</p>
     <p>Madurez @nuevoCliente.InfoCliente.Madurez</p>
-</div>
+</div>*@
 
 <PageTitle>Resumen Setup GIA TIC</PageTitle>
 
@@ -15,7 +15,7 @@
     <div class="sector">
         <h1>Telecomunicaciones</h1>
         <ul>
-            @foreach (List<string> servicio in _serviciosTelco)
+            @foreach (List<string> servicio in getServiciosArea("Telecomunicaciones"))
             {
                 <li>
                     @foreach (string s in servicio)
@@ -31,7 +31,7 @@
     <div class="sector">
         <h1>Bases de Datos</h1>
         <ul>
-            @foreach (List<string> servicio in _serviciosBD)
+            @foreach (List<string> servicio in getServiciosArea("Bases de Datos"))
             {
                 <li>
                     @foreach (string s in servicio)
@@ -48,7 +48,7 @@
     <div class="sector">
         <h1>Servidores Fisicos</h1>
         <ul>
-            @foreach (List<string> servicio in _serviciosServidoresFisicos)
+            @foreach (List<string> servicio in getServiciosArea("Servidores Fisicos"))
             {
                 <li>
                     @foreach (string s in servicio)
@@ -64,7 +64,7 @@
     <div class="sector">
         <h1>Servidores Virtuales</h1>
         <ul>
-            @foreach (List<string> servicio in _serviciosServidoresVirtuales)
+            @foreach (List<string> servicio in getServiciosArea("Servidores Virtuales"))
             {
                 <li>
                     @foreach (string s in servicio)
@@ -80,7 +80,7 @@
     <div class="sector">
         <h1>Plataformas Centralizadas</h1>
         <ul>
-            @foreach (List<string> servicio in _serviciosPlataformasCentralizadas)
+            @foreach (List<string> servicio in getServiciosArea("Plataformas Centralizadas"))
             {
                 <li>
                     @foreach (string s in servicio)
@@ -152,91 +152,91 @@
                 List<List<string>> serviciosTelco = new List<List<string>>();
                 List<string> nuevoServicio;
                 if (ListasTemporales.ListaTICTelecomunicaciones != null)
-            {
-                foreach (Setup servicio in ListasTemporales.ListaTICTelecomunicaciones)
                 {
-                    nuevoServicio = new List<string>();
-                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
-                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
-                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
-                    nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
-                    nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
-                    nuevoServicio.Add("Costo: " + servicio.Costo);
-                    serviciosTelco.Add(nuevoServicio);
-                }
+                    foreach (Setup servicio in ListasTemporales.ListaTICTelecomunicaciones)
+                    {
+                        nuevoServicio = new List<string>();
+                        nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                        nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                        nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                        nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
+                        nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
+                        nuevoServicio.Add("Costo: " + servicio.Costo);
+                        serviciosTelco.Add(nuevoServicio);
+                    }
 
-            }
+                }
                 return serviciosTelco;
             case "Bases de Datos":
                 List<List<string>> serviciosBD = new List<List<string>>();
                 if (ListasTemporales.ListaTICBasesDeDatos != null)
-            {
-                foreach (Setup servicio in ListasTemporales.ListaTICBasesDeDatos)
                 {
-                    nuevoServicio = new List<string>();
-                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
-                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
-                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
-                    nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
-                    nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
-                    nuevoServicio.Add("Costo: " + servicio.Costo);
-                    serviciosBD.Add(nuevoServicio);
-                }
+                    foreach (Setup servicio in ListasTemporales.ListaTICBasesDeDatos)
+                    {
+                        nuevoServicio = new List<string>();
+                        nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                        nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                        nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                        nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
+                        nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
+                        nuevoServicio.Add("Costo: " + servicio.Costo);
+                        serviciosBD.Add(nuevoServicio);
+                    }
 
-            }
+                }
                 return serviciosBD;
             case "Servidores Fisicos":
                 List<List<string>> serviciosServidoresFisicos = new List<List<string>>();
                 if (ListasTemporales.ListaTICServidoresFisicos != null)
-            {
-                foreach (Setup servicio in ListasTemporales.ListaTICServidoresFisicos)
                 {
-                    nuevoServicio = new List<string>();
-                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
-                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
-                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
-                    nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
-                    nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
-                    nuevoServicio.Add("Costo: " + servicio.Costo);
-                    serviciosServidoresFisicos.Add(nuevoServicio);
-                }
+                    foreach (Setup servicio in ListasTemporales.ListaTICServidoresFisicos)
+                    {
+                        nuevoServicio = new List<string>();
+                        nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                        nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                        nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                        nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
+                        nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
+                        nuevoServicio.Add("Costo: " + servicio.Costo);
+                        serviciosServidoresFisicos.Add(nuevoServicio);
+                    }
 
-            }
+                }
                 return serviciosServidoresFisicos;
             case "Servidores Virtuales":
                 List<List<string>> serviciosServidoresVirtuales = new List<List<string>>();
                 if (ListasTemporales.ListaTICServidoresVirtuales != null)
-            {
-                foreach (Setup servicio in ListasTemporales.ListaTICServidoresVirtuales)
                 {
-                    nuevoServicio = new List<string>();
-                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
-                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
-                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
-                    nuevoServicio.Add("Costo: " + servicio.Costo);
-                    serviciosServidoresVirtuales.Add(nuevoServicio);
-                }
+                    foreach (Setup servicio in ListasTemporales.ListaTICServidoresVirtuales)
+                    {
+                        nuevoServicio = new List<string>();
+                        nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                        nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                        nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                        nuevoServicio.Add("Costo: " + servicio.Costo);
+                        serviciosServidoresVirtuales.Add(nuevoServicio);
+                    }
 
-            }
+                }
                 return serviciosServidoresVirtuales;
             case "Plataformas Centralizadas":
                 List<List<string>> serviciosPlataformasCentralizadas = new List<List<string>>();
                 //TODO: falta todo esto
                 if (ListasTemporales.ListaTICPlataformasCentralizadas != null)
-            {
-                foreach (Setup servicio in ListasTemporales.ListaTICPlataformasCentralizadas)
                 {
-                    nuevoServicio = new List<string>();
-                    nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
-                    nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
-                    nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
-                    nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
-                    nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
-                    nuevoServicio.Add("Costo: " + servicio.Costo);
-                    serviciosPlataformasCentralizadas.Add(nuevoServicio);
-                }
+                    foreach (Setup servicio in ListasTemporales.ListaTICPlataformasCentralizadas)
+                    {
+                        nuevoServicio = new List<string>();
+                        nuevoServicio.Add("Equipo: " + servicio.TipoEquipo.Nombre);
+                        nuevoServicio.Add("Cantidad: " + servicio.Cantidad);
+                        nuevoServicio.Add("Actualizacion: " + servicio.Actualizacion.Nombre);
+                        nuevoServicio.Add("Distribucion: " + servicio.Distribucion.Nombre);
+                        nuevoServicio.Add("Atencion: " + servicio.Atencion.Nombre);
+                        nuevoServicio.Add("Costo: " + servicio.Costo);
+                        serviciosPlataformasCentralizadas.Add(nuevoServicio);
+                    }
 
-            }
+                }
                 return serviciosPlataformasCentralizadas;
             default:
                 Console.WriteLine("Error");
@@ -244,12 +244,12 @@
         }
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        _serviciosTelco = getServiciosArea("Telecomunicaciones");
-        _serviciosBD = getServiciosArea("Bases de Datos");
-        _serviciosServidoresFisicos = getServiciosArea("Servidores Fisicos");
-        _serviciosServidoresVirtuales = getServiciosArea("Servidores Virtuales");
-        _serviciosPlataformasCentralizadas = getServiciosArea("Plataformas Centralizadas");
-    }
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    _serviciosTelco = getServiciosArea("Telecomunicaciones");
+    //    _serviciosBD = getServiciosArea("Bases de Datos");
+    //    _serviciosServidoresFisicos = getServiciosArea("Servidores Fisicos");
+    //    _serviciosServidoresVirtuales = getServiciosArea("Servidores Virtuales");
+    //    _serviciosPlataformasCentralizadas = getServiciosArea("Plataformas Centralizadas");
+    //}
 }

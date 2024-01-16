@@ -39,6 +39,24 @@ namespace CalculadoraPianoPiano.Shared
 				case "Plataformas Centralizadas":
                     PlataformasCentralizadas = new VariablesDeServicio(variables);
                     break;
+				case "Actualizacion":
+					Actualizacion = new VariablesDeServicio(variables);
+					break;
+				case "Nubes":
+					Nubes = new VariablesDeServicio(variables);
+					break;
+				case "Distribucion":
+					Distribucion = new VariablesDeServicio(variables);
+					break;
+				case "Atencion":
+					Atencion = new VariablesDeServicio(variables);
+					break;
+				case "Estabilizacion":
+					Estabilizacion = new VariablesDeServicio(variables);
+					break;
+				case "Contratos":
+					Contratos = new VariablesDeServicio(variables);
+					break;
 				default:
 					Console.Write("Error");
 					break;
