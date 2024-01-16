@@ -12,87 +12,282 @@
 
 <h3>Resumen Setup GIA TIC</h3>
 <div class="main">
+
     <div class="sector">
         <h1>Telecomunicaciones</h1>
-        <ul>
-            @foreach (List<string> servicio in getServiciosArea("Telecomunicaciones"))
+        @foreach (Setup setup in ListasTemporales.ListaTICTelecomunicaciones)
             {
-                <li>
-                    @foreach (string s in servicio)
-                    {
-                        <p>@s</p>
-                    }
-                </li>
-            }
-        </ul>
-        <br />
+            <div class="resumenSetup" style="display: block;">
+                <span style="display: block;">
+                    <label for="dropdownTipoEquipo">Equipos: </label>
+                    <select id="dropdownTipoEquipo" @bind="@setup.TipoEquipo.Nombre">
+                        <option value="@setup.TipoEquipo.Nombre">@setup.TipoEquipo.Nombre</option>
+                        @foreach (var option in VSTIC.Telecomunicaciones.getVariables())
+                            {
+                                if (option != @setup.TipoEquipo.Nombre)
+                                {
+                                <option value="@option">@option</option>
+
+                                }
+                            }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownActualizacion">Actualizacion: </label>
+                    <select id="dropdownActualizacion" @bind="@setup.Actualizacion.Nombre">
+                        <option value="@setup.Actualizacion.Nombre">@setup.Actualizacion.Nombre</option>
+                        @foreach (var option in VSTIC.Actualizacion.getVariables())
+                            {
+                                if (option != @setup.Actualizacion.Nombre)
+                                {
+                                <option value="@option">@option</option>
+
+                                }
+                            }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownDistribucion">Distribucion: </label>
+                    <select id="dropdownDistribucion" @bind="@setup.Distribucion.Nombre">
+                        <option value="@setup.Distribucion.Nombre">@setup.Distribucion.Nombre</option>
+                        @foreach (var option in VSTIC.Distribucion.getVariables())
+                            {
+                                if (option != @setup.Distribucion.Nombre)
+                                {
+                                <option value="@option">@option</option>
+
+                                }
+                            }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownAtencion">Atencion: </label>
+                    <select id="dropdownAtencion" @bind="@setup.Atencion.Nombre">
+                        <option value="@setup.Atencion.Nombre">@setup.Atencion.Nombre</option>
+                        @foreach (var option in VSTIC.Atencion.getVariables())
+                            {
+                                if (option != @setup.Atencion.Nombre)
+                                {
+                                <option value="@option">@option</option>
+
+                                }
+                            }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="cantidadEquipos">Numero de Equipos: </label>
+                    <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
+                </span>
+
+                <button @onclick="() => removeSetup(ListasTemporales.ListaTICTelecomunicaciones, setup)">Eliminar Equipos</button>
+
+            </div>
+        }
     </div>
+
 
     <div class="sector">
-        <h1>Bases de Datos</h1>
-        <ul>
-            @foreach (List<string> servicio in getServiciosArea("Bases de Datos"))
-            {
-                <li>
-                    @foreach (string s in servicio)
-                    {
-                        <p>@s</p>
-                        
-                    }
-                </li>
-            }
-        </ul>
-        <br />
+        <h1>Bases De Datos</h1>
+        @foreach (Setup setup in ListasTemporales.ListaTICBasesDeDatos)
+        {
+            <div class="resumenSetup" style="display: block;">
+                <span style="display: block;">
+                    <label for="dropdownTipoEquipo">Base de Datos: </label>
+                    <select id="dropdownTipoEquipo" @bind="@setup.TipoEquipo.Nombre">
+                        <option value="@setup.TipoEquipo.Nombre">@setup.TipoEquipo.Nombre</option>
+                        @foreach (var option in VSTIC.BasesDeDatos.getVariables())
+                        {
+                            if (option != @setup.TipoEquipo.Nombre)
+                            {
+                                <option value="@option">@option</option>
 
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownActualizacion">Actualizacion: </label>
+                    <select id="dropdownActualizacion" @bind="@setup.Actualizacion.Nombre">
+                        <option value="@setup.Actualizacion.Nombre">@setup.Actualizacion.Nombre</option>
+                        @foreach (var option in VSTIC.Actualizacion.getVariables())
+                        {
+                            if (option != @setup.Actualizacion.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownDistribucion">Distribucion: </label>
+                    <select id="dropdownDistribucion" @bind="@setup.Distribucion.Nombre">
+                        <option value="@setup.Distribucion.Nombre">@setup.Distribucion.Nombre</option>
+                        @foreach (var option in VSTIC.Distribucion.getVariables())
+                        {
+                            if (option != @setup.Distribucion.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownAtencion">Atencion: </label>
+                    <select id="dropdownAtencion" @bind="@setup.Atencion.Nombre">
+                        <option value="@setup.Atencion.Nombre">@setup.Atencion.Nombre</option>
+                        @foreach (var option in VSTIC.Atencion.getVariables())
+                        {
+                            if (option != @setup.Atencion.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="cantidadEquipos">Numero de Bases de Datos: </label>
+                    <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
+                </span>
+
+                <button @onclick="() => removeSetup(ListasTemporales.ListaTICBasesDeDatos, setup)">Eliminar Equipos</button>
+
+            </div>
+        }
     </div>
+
     <div class="sector">
         <h1>Servidores Fisicos</h1>
-        <ul>
-            @foreach (List<string> servicio in getServiciosArea("Servidores Fisicos"))
-            {
-                <li>
-                    @foreach (string s in servicio)
-                    {
-                        <p>@s</p>
-                    }
-                </li>
-            }
-        </ul>
-        <br />
+        @foreach (Setup setup in ListasTemporales.ListaTICServidoresFisicos)
+        {
+            <div class="resumenSetup" style="display: block;">
+                <span style="display: block;">
+                    <label for="dropdownTipoEquipo">Servidor: </label>
+                    <select id="dropdownTipoEquipo" @bind="@setup.TipoEquipo.Nombre">
+                        <option value="@setup.TipoEquipo.Nombre">@setup.TipoEquipo.Nombre</option>
+                        @foreach (var option in VSTIC.ServidoresFisicos.getVariables())
+                        {
+                            if (option != @setup.TipoEquipo.Nombre)
+                            {
+                                <option value="@option">@option</option>
 
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownActualizacion">Actualizacion: </label>
+                    <select id="dropdownActualizacion" @bind="@setup.Actualizacion.Nombre">
+                        <option value="@setup.Actualizacion.Nombre">@setup.Actualizacion.Nombre</option>
+                        @foreach (var option in VSTIC.Actualizacion.getVariables())
+                        {
+                            if (option != @setup.Actualizacion.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownDistribucion">Distribucion: </label>
+                    <select id="dropdownDistribucion" @bind="@setup.Distribucion.Nombre">
+                        <option value="@setup.Distribucion.Nombre">@setup.Distribucion.Nombre</option>
+                        @foreach (var option in VSTIC.Distribucion.getVariables())
+                        {
+                            if (option != @setup.Distribucion.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownAtencion">Atencion: </label>
+                    <select id="dropdownAtencion" @bind="@setup.Atencion.Nombre">
+                        <option value="@setup.Atencion.Nombre">@setup.Atencion.Nombre</option>
+                        @foreach (var option in VSTIC.Atencion.getVariables())
+                        {
+                            if (option != @setup.Atencion.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="cantidadEquipos">Numero de Servidores: </label>
+                    <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
+                </span>
+
+                <button @onclick="() => removeSetup(ListasTemporales.ListaTICServidoresFisicos, setup)">Eliminar Servidores</button>
+
+            </div>
+        }
     </div>
+
     <div class="sector">
         <h1>Servidores Virtuales</h1>
-        <ul>
-            @foreach (List<string> servicio in getServiciosArea("Servidores Virtuales"))
-            {
-                <li>
-                    @foreach (string s in servicio)
-                    {
-                        <p>@s</p>
-                    }
-                </li>
-            }
-        </ul>
-        <br />
+        @foreach (Setup setup in ListasTemporales.ListaTICServidoresVirtuales)
+        {
+            <div class="resumenSetup" style="display: block;">
+                <span style="display: block;">
+                    <label for="dropdownTipoEquipo">Servidor: </label>
+                    <select id="dropdownTipoEquipo" @bind="@setup.TipoEquipo.Nombre">
+                        <option value="@setup.TipoEquipo.Nombre">@setup.TipoEquipo.Nombre</option>
+                        @foreach (var option in VSTIC.ServidoresVirtuales.getVariables())
+                        {
+                            if (option != @setup.TipoEquipo.Nombre)
+                            {
+                                <option value="@option">@option</option>
 
-    </div>
-    <div class="sector">
-        <h1>Plataformas Centralizadas</h1>
-        <ul>
-            @foreach (List<string> servicio in getServiciosArea("Plataformas Centralizadas"))
-            {
-                <li>
-                    @foreach (string s in servicio)
-                    {
-                        <p>@s</p>
-                    }
-                </li>
-            }
-        </ul>
-        <br />
+                            }
+                        }
+                    </select>
+                </span>
 
+                <span style="display: block;">
+                    <label for="dropdownActualizacion">Actualizacion: </label>
+                    <select id="dropdownActualizacion" @bind="@setup.Actualizacion.Nombre">
+                        <option value="@setup.Actualizacion.Nombre">@setup.Actualizacion.Nombre</option>
+                        @foreach (var option in VSTIC.Actualizacion.getVariables())
+                        {
+                            if (option != @setup.Actualizacion.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="cantidadEquipos">Numero de Servidores: </label>
+                    <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
+                </span>
+
+                <button @onclick="() => removeSetup(ListasTemporales.ListaTICServidoresVirtuales, setup)">Eliminar Servidores</button>
+
+            </div>
+        }
     </div>
+
     <button @onclick="ContinuarAOngoing">Continuar</button>
 
 
@@ -107,6 +302,9 @@
 
     [CascadingParameter]
     public ListasSetupTemporales? ListasTemporales { get; set; }
+
+    [CascadingParameter]
+    public VariablesSetupTIC VSTIC { get; set; }
 
     private string? equiposTelcoDropdown;
     private int cantidadEquiposTelco;
@@ -152,6 +350,11 @@
         nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresVirtuales = ListasTemporales.ListaTICServidoresVirtuales;
         nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaPlataformasCentralizadas = ListasTemporales.ListaTICPlataformasCentralizadas;
         NavigationManager.NavigateTo("/resumenPrueba");
+    }
+
+    private void removeSetup(List<Setup> lista, Setup setup)
+    {
+        lista.Remove(setup);
     }
 
     private List<List<string>> getServiciosArea(string area)

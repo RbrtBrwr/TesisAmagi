@@ -1,128 +1,191 @@
 ﻿@inject NavigationManager NavigationManager
 
-
-<div>
-    <h2>Esta es la pagina de Setup GIA TIC</h2>
-    <p>Sector @nuevoCliente.InfoCliente.Sector</p>
-    <p>Nombre @nuevoCliente.InfoCliente.Nombre</p>
-    <p>Madurez @nuevoCliente.InfoCliente.Madurez</p>
-</div>
-
 <PageTitle>GIA TIC</PageTitle>
 
 <h3>GIA TIC</h3>
 <div class="main">
     <div class="section" style="display: block;">
         <h2>Equipos Telecomunicaciones</h2>
-        <select @bind="equiposTelcoDropdown" style="display: block;">
-            @foreach (var option in VSTIC.Telecomunicaciones.getVariables())
+        <span style="display: block;">
+            <label for="equiposTelcoDropdown">Equipo:</label>
+            <select id="equiposTelcoDropdown" @bind="equiposTelcoDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.Telecomunicaciones.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <input type="number" @bind="cantidadEquiposTelco" style="display: block;" />
-        <select @bind="actualizacionEquiposTelcoDropdown" style="display: block;">
-            @foreach (var option in actualizacion)
+            </select>
+        </span>
+
+        <span style="display: block;">
+            <label for="cantidadEquiposTelco">Cantidad:</label>
+            <input type="number" id="cantidadEquiposTelco" @bind="cantidadEquiposTelco" />
+        </span>
+
+        <span style="display: block;">
+            <label for="actualizacionEquiposTelcoDropdown">Actualizacion:</label>
+            <select id="actualizacionEquiposTelcoDropdown" @bind="actualizacionEquiposTelcoDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.Actualizacion.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <select @bind="distribucionEquiposTelcoDropdown" style="display: block;">
-            @foreach (var option in distribucion)
+            </select>
+        </span>
+
+        <span style="display: block;">
+            <label for="distribucionEquiposTelcoDropdown">Distribucion:</label>
+            <select id="distribucionEquiposTelcoDropdown" @bind="distribucionEquiposTelcoDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.Distribucion.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <select @bind="atencionEquiposTelcoDropdown" style="display: block;">
-            @foreach (var option in atencion)
+            </select>
+        </span>
+
+        <span style="display: block;">
+            <label for="atencionEquiposTelcoDropdown">Atencion:</label>
+            <select id="atencionEquiposTelcoDropdown" @bind="atencionEquiposTelcoDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.Atencion.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
+            </select>
+        </span>
         <button @onclick="AgregarATelco" style="display: block;">Agregar Equipos</button>
     </div>
 
     <div class="section" style="display: block;">
         <h2>Bases de Datos</h2>
-        <select @bind="basesDeDatosDropdown" style="display: block;">
-            @foreach (var option in basesDeDatos)
+
+        <span style="display: block;">
+            <label for="basesDeDatosDropdown">Base de Datos:</label>
+            <select id="basesDeDatosDropdown" @bind="basesDeDatosDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.BasesDeDatos.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <input type="number" @bind="cantidadBasesDeDatos" style="display: block;" />
-        <select @bind="actualizacionBasesDeDatosDropdown" style="display: block;">
-            @foreach (var option in actualizacion)
+            </select>
+        </span>
+
+        <span style="display: block;">
+            <label for="cantidadBasesDeDatos">Cantidad:</label>
+            <input type="number" id="cantidadBasesDeDatos" @bind="cantidadBasesDeDatos"/>
+        </span>
+
+        <span style="display: block;">
+            <label for="actualizacionBasesDeDatosDropdown">Actualizacion:</label>
+            <select id="actualizacionBasesDeDatosDropdown" @bind="actualizacionBasesDeDatosDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.Actualizacion.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <select @bind="distribucionBasesDeDatosDropdown" style="display: block;">
-            @foreach (var option in distribucion)
+            </select>
+        </span>
+
+        <span style="display: block;">
+            <label for="distribucionBasesDeDatosDropdown">Distribucion:</label>
+            <select id="distribucionBasesDeDatosDropdown" @bind="distribucionBasesDeDatosDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.Distribucion.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <select @bind="atencionBasesDeDatosDropdown" style="display: block;">
-            @foreach (var option in atencion)
+            </select>
+        </span>
+
+        <span style="display: block;">
+            <label for="atencionBasesDeDatosDropdown">Atencion:</label>
+            <select id="atencionBasesDeDatosDropdown" @bind="atencionBasesDeDatosDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.Atencion.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
+            </select>
+        </span>
+
         <button @onclick="AgregarABasesDeDatos" style="display: block;">Agregar Bases de Datos</button>
     </div>
 
+
     <div class="section" style="display: block;">
-        <h2>Servidores Fisicos</h2>
-        <select @bind="servidoresFisicosDropdown" style="display: block;">
-            @foreach (var option in servidores)
+        <h2>Servidores Físicos</h2>
+
+        <span style="display: block;">
+            <label for="servidoresFisicosDropdown">Servidor:</label>
+            <select id="servidoresFisicosDropdown" @bind="servidoresFisicosDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.ServidoresFisicos.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <input type="number" @bind="cantidadServidoresFisicos" style="display: block;" />
-        <select @bind="actualizacionServidoresFisicosDropdown" style="display: block;">
-            @foreach (var option in actualizacion)
+            </select>
+        </span>
+
+        <span style="display: block;">
+            <label for="cantidadServidoresFisicos">Cantidad:</label>
+            <input type="number" id="cantidadServidoresFisicos" @bind="cantidadServidoresFisicos" />
+        </span>
+
+        <span style="display: block;">
+            <label for="distribucionServidoresFisicosDropdown">Distribucion:</label>
+            <select id="distribucionServidoresFisicosDropdown" @bind="distribucionServidoresFisicosDropdown" >
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.Distribucion.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <select @bind="distribucionServidoresFisicosDropdown" style="display: block;">
-            @foreach (var option in distribucion)
+            </select>
+        </span>
+
+        <span style="display: block;">
+            <label for="atencionServidoresFisicosDropdown">Atencion:</label>
+            <select id="atencionServidoresFisicosDropdown" @bind="atencionServidoresFisicosDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.Atencion.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <select @bind="atencionServidoresFisicosDropdown" style="display: block;">
-            @foreach (var option in atencion)
-                {
-                <option value="@option">@option</option>
-                }
-        </select>
+            </select>
+        </span>
+
         <button @onclick="AgregarAServidoresFisicos" style="display: block;">Agregar Servidores</button>
     </div>
 
+
     <div class="section" style="display: block;">
-        <h2 style="display: block;">Servidores Virtuales</h2>
-        <select @bind="servidoresVirtualesDropdown" style="display: block;">
-            @foreach (var option in servidores)
+        <h2>Servidores Virtuales</h2>
+
+        <span style="display: block;">
+            <label for="servidoresVirtualesDropdown">Servidor:</label>
+            <select id="servidoresVirtualesDropdown" @bind="servidoresVirtualesDropdown">
+                <option value="">Seleccionar</option>
+                @foreach (var option in VSTIC.ServidoresVirtuales.getVariables())
                 {
-                <option value="@option">@option</option>
+                    <option value="@option">@option</option>
                 }
-        </select>
-        <input type="number" @bind="cantidadServidoresVirtuales" style="display: block;" />
-        <select @bind="actualizacionServidoresVirtualesDropdown" style="display: block;">
-            @foreach (var option in actualizacion)
-                {
-                <option value="@option">@option</option>
-                }
-        </select>
+            </select>
+        </span>
+
+        <span style="display: block;">
+            <label for="cantidadServidoresVirtuales">Cantidad:</label>
+            <input type="number" id="cantidadServidoresVirtuales" @bind="cantidadServidoresVirtuales" />
+        </span>
+
         <button @onclick="AgregarAServidoresVirtuales" style="display: block;">Agregar Servidores</button>
     </div>
 
+
+    @*TODO: Falta plataformas centralizadas*@
     <div class="section" style="display: block;">
         <h2 style="display: block;">Plataformas Centralizadas</h2>
         <select @bind="centralizadasDropdown" style="display: block;">
+            <option value="">Seleccionar</option>
             @foreach (var option in plataformasCentralizadas)
             {
                 <option value="@option">@option</option>
@@ -130,24 +193,28 @@
         </select>
         <input type="number" @bind="cantidadCentralizadas" style="display: block;" />
         <select @bind="actualizacionCentralizadasDropdown" style="display: block;">
+            <option value="">Seleccionar</option>
             @foreach (var option in actualizacion)
             {
                 <option value="@option">@option</option>
             }
         </select>
         <select @bind="atencionCentralizadasDropdown" style="display: block;">
+            <option value="">Seleccionar</option>
             @foreach (var option in atencion)
             {
                 <option value="@option">@option</option>
             }
         </select>
         <select @bind="distribucionCentralizadasDropdown" style="display: block;">
+            <option value="">Seleccionar</option>
             @foreach (var option in distribucion)
             {
                 <option value="@option">@option</option>
             }
         </select>
         <select @bind="contratoCentralizadasDropdown" style="display: block;">
+            <option value="">Seleccionar</option>
             @foreach (var option in contratos)
             {
                 <option value="@option">@option</option>

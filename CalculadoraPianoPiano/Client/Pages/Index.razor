@@ -14,7 +14,8 @@
         <input id="nombreCliente" placeholder="Nombre" @bind="@nombreCliente" />
 
         <label for="dropdownSector">Sector:</label>
-        <select id="dropdownSector" @bind="@sectorCliente">
+        <select required id="dropdownSector" @bind="@sectorCliente">
+            <option value="">Seleccionar Sector</option>
             @foreach (var option in dropdownSectores)
             {
                 <option value="@option">@option</option>
@@ -22,7 +23,8 @@
         </select>
 
         <label for="dropdownMadurez">Madurez:</label>
-        <select id="dropdownMadurez" @bind="@madurezCliente">
+        <select required id="dropdownMadurez" @bind="@madurezCliente">
+            <option value="">Seleccionar Madurez</option>
             @foreach (var option in dropdownMadurez)
             {
                 <option value="@option">@option</option>
@@ -49,12 +51,12 @@
     private string? sectorCliente;
     private string? madurezCliente;
 
-    private List<string> dropdownSectores = new List<string> { "Seleccionar Sector", "Financiero", "Retail", "Manufactura", "Servicios", "Gobierno", "Energia", "Tecnologia" };
-    private List<string> dropdownMadurez = new List<string> { "Seleccionar Madurez", "Ad-Hoc", "Enlightened", "Centralizes", "Collaborative", "Self-Service" };
+    private List<string> dropdownSectores = new List<string> { "Financiero", "Retail", "Manufactura", "Servicios", "Gobierno", "Energia", "Tecnologia" };
+    private List<string> dropdownMadurez = new List<string> { "Ad-Hoc", "Enlightened", "Centralizes", "Collaborative", "Self-Service" };
 
     private void GuardarYContinuar()
     {
-        if (nuevoCliente != null && nombreCliente != null && sectorCliente != null && madurezCliente != null || sectorCliente == "Seleccionar Sector" || madurezCliente == "Seleccionar Madurez")
+        if (nuevoCliente != null && nombreCliente != null && sectorCliente != null && madurezCliente != null)
         {
             InfoCliente nuevaInformacion = new InfoCliente(nombreCliente, sectorCliente, madurezCliente);
             nuevoCliente.InfoCliente = nuevaInformacion;
