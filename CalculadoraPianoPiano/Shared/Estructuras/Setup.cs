@@ -15,6 +15,7 @@ namespace CalculadoraPianoPiano.Shared
         public Variable Estabilizacion { get; set; }
         public Variable VariableAtencionDistribucion { get; set; }
         public double Costo { get; set; }
+        public double CostoSector { get; set; }
 
         // TODO: variables de servicio
 
@@ -36,7 +37,7 @@ namespace CalculadoraPianoPiano.Shared
             switch (sector)
             {
                 default:
-                    Costo = 10.0;
+                    CostoSector = 10.0;
                     break;
             }
         }
@@ -46,7 +47,7 @@ namespace CalculadoraPianoPiano.Shared
 
             calcularVariableAtencionDistribucion();
             double esfuerzoTotal = TipoEquipo.Esfuerzo * Actualizacion.Esfuerzo * Distribucion.Esfuerzo * Atencion.Esfuerzo * Contrato.Esfuerzo * Estabilizacion.Esfuerzo * VariableAtencionDistribucion.Esfuerzo;
-            Costo *= Cantidad;
+            Costo = CostoSector * Cantidad;
             Costo *= esfuerzoTotal;
             Costo = Double.Round(Costo, 2);
 
