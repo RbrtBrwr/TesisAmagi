@@ -19,5 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AntDesign" Version="0.17.3" />
+    <PackageReference Include="Blazor.Bootstrap" Version="1.10.5" />
   </ItemGroup>
 </Project>

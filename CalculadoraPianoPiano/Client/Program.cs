@@ -16,5 +16,7 @@ var cliente = new Cliente();
 builder.Services.AddSingleton(cliente);
 builder.Services.AddAntDesign();
 
+builder.Services.AddBlazorBootstrap();
+
 await builder.Build().RunAsync();
 

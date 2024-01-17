@@ -31,9 +31,11 @@
   <ItemGroup>
     <None Remove="Components\" />
     <None Remove="Layouts\" />
+    <None Remove="ProblemComponents\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Components\" />
     <Folder Include="Layouts\" />
+    <Folder Include="ProblemComponents\" />
   </ItemGroup>
 </Project>
