@@ -1,4 +1,5 @@
 ﻿@inject NavigationManager NavigationManager
+@using System.Linq
 
 
 @*<div>
@@ -16,20 +17,20 @@
     <div class="sector">
         <h1>Telecomunicaciones</h1>
         @foreach (Setup setup in ListasTemporales.ListaTICTelecomunicaciones)
-            {
+        {
             <div class="resumenSetup" style="display: block;">
                 <span style="display: block;">
                     <label for="dropdownTipoEquipo">Equipos: </label>
                     <select id="dropdownTipoEquipo" @bind="@setup.TipoEquipo.Nombre">
                         <option value="@setup.TipoEquipo.Nombre">@setup.TipoEquipo.Nombre</option>
                         @foreach (var option in VSTIC.Telecomunicaciones.getVariables())
+                        {
+                            if (option != @setup.TipoEquipo.Nombre)
                             {
-                                if (option != @setup.TipoEquipo.Nombre)
-                                {
                                 <option value="@option">@option</option>
 
-                                }
                             }
+                        }
                     </select>
                 </span>
 
@@ -38,13 +39,13 @@
                     <select id="dropdownActualizacion" @bind="@setup.Actualizacion.Nombre">
                         <option value="@setup.Actualizacion.Nombre">@setup.Actualizacion.Nombre</option>
                         @foreach (var option in VSTIC.Actualizacion.getVariables())
+                        {
+                            if (option != @setup.Actualizacion.Nombre)
                             {
-                                if (option != @setup.Actualizacion.Nombre)
-                                {
                                 <option value="@option">@option</option>
 
-                                }
                             }
+                        }
                     </select>
                 </span>
 
@@ -53,13 +54,13 @@
                     <select id="dropdownDistribucion" @bind="@setup.Distribucion.Nombre">
                         <option value="@setup.Distribucion.Nombre">@setup.Distribucion.Nombre</option>
                         @foreach (var option in VSTIC.Distribucion.getVariables())
+                        {
+                            if (option != @setup.Distribucion.Nombre)
                             {
-                                if (option != @setup.Distribucion.Nombre)
-                                {
                                 <option value="@option">@option</option>
 
-                                }
                             }
+                        }
                     </select>
                 </span>
 
@@ -68,13 +69,13 @@
                     <select id="dropdownAtencion" @bind="@setup.Atencion.Nombre">
                         <option value="@setup.Atencion.Nombre">@setup.Atencion.Nombre</option>
                         @foreach (var option in VSTIC.Atencion.getVariables())
+                        {
+                            if (option != @setup.Atencion.Nombre)
                             {
-                                if (option != @setup.Atencion.Nombre)
-                                {
                                 <option value="@option">@option</option>
 
-                                }
                             }
+                        }
                     </select>
                 </span>
 
@@ -83,10 +84,23 @@
                     <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
                 </span>
 
+                <span style="display: block;">
+                    <label for="costoSetup">Costo:</label>
+                    <em id="costoSetup" class="price"> $@setup.Costo </em>
+                </span>
+
+                <button @onclick="() => StateHasChanged()">Actualizar Equipos</button>
+
                 <button @onclick="() => removeSetup(ListasTemporales.ListaTICTelecomunicaciones, setup)">Eliminar Equipos</button>
 
             </div>
         }
+
+        <span style="display:block">
+            <label for="costoTotalArea">Costo Total Plataformas Centralizadas: </label>
+            <em id="costoTotalArea" class="price"> $@ListasTemporales.ListaTICTelecomunicaciones.Sum(item => item.Costo) </em>
+        </span>
+
     </div>
 
 
@@ -160,10 +174,22 @@
                     <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
                 </span>
 
+                <span style="display: block;">
+                    <label for="costoSetup">Costo:</label>
+                    <em id="costoSetup" class="price"> $@setup.Costo </em>
+                </span>
+
+                <button @onclick="() => StateHasChanged()">Actualizar Equipos</button>
+
                 <button @onclick="() => removeSetup(ListasTemporales.ListaTICBasesDeDatos, setup)">Eliminar Equipos</button>
 
             </div>
         }
+
+        <span style="display:block">
+            <label for="costoTotalArea">Costo Total Plataformas Centralizadas: </label>
+            <em id="costoTotalArea" class="price"> $@ListasTemporales.ListaTICBasesDeDatos.Sum(item => item.Costo) </em>
+        </span>
     </div>
 
     <div class="sector">
@@ -176,6 +202,107 @@
                     <select id="dropdownTipoEquipo" @bind="@setup.TipoEquipo.Nombre">
                         <option value="@setup.TipoEquipo.Nombre">@setup.TipoEquipo.Nombre</option>
                         @foreach (var option in VSTIC.ServidoresFisicos.getVariables())
+                        {
+                            if (option != @setup.TipoEquipo.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="dropdownDistribucion">Distribucion: </label>
+                    <select id="dropdownDistribucion" @bind="@setup.Distribucion.Nombre">
+                        <option value="@setup.Distribucion.Nombre">@setup.Distribucion.Nombre</option>
+                        @foreach (var option in VSTIC.Distribucion.getVariables())
+                        {
+                            if (option != @setup.Distribucion.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+                <span style="display: block;">
+                    <label for="cantidadEquipos">Numero de Servidores: </label>
+                    <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
+                </span>
+
+                <span style="display: block;">
+                    <label for="costoSetup">Costo:</label>
+                    <em id="costoSetup" class="price"> $@setup.Costo </em>
+                </span>
+
+                <button @onclick="() => StateHasChanged()">Actualizar Equipos</button>
+
+                <button @onclick="() => removeSetup(ListasTemporales.ListaTICServidoresFisicos, setup)">Eliminar Servidores</button>
+
+            </div>
+            <span style="display:block">
+                <label for="costoTotalArea">Costo Total Plataformas Centralizadas: </label>
+                <em id="costoTotalArea" class="price"> $@ListasTemporales.ListaTICServidoresFisicos.Sum(item => item.Costo) </em>
+            </span>
+        }
+    </div>
+
+    <div class="sector">
+        <h1>Servidores Virtuales</h1>
+        @foreach (Setup setup in ListasTemporales.ListaTICServidoresVirtuales)
+        {
+            <div class="resumenSetup" style="display: block;">
+                <span style="display: block;">
+                    <label for="dropdownTipoEquipo">Servidor: </label>
+                    <select id="dropdownTipoEquipo" @bind="@setup.TipoEquipo.Nombre">
+                        <option value="@setup.TipoEquipo.Nombre">@setup.TipoEquipo.Nombre</option>
+                        @foreach (var option in VSTIC.ServidoresVirtuales.getVariables())
+                        {
+                            if (option != @setup.TipoEquipo.Nombre)
+                            {
+                                <option value="@option">@option</option>
+
+                            }
+                        }
+                    </select>
+                </span>
+
+
+                <span style="display: block;">
+                    <label for="cantidadEquipos">Numero de Servidores: </label>
+                    <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
+                </span>
+
+                <span style="display: block;">
+                    <label for="costoSetup">Costo:</label>
+                    <em id="costoSetup" class="price"> $@setup.Costo </em>
+                </span>
+
+                <button @onclick="() => StateHasChanged()">Actualizar Equipos</button>
+
+                <button @onclick="() => removeSetup(ListasTemporales.ListaTICServidoresVirtuales, setup)">Eliminar Servidores</button>
+
+            </div>
+        }
+
+        <span style="display:block">
+            <label for="costoTotalArea">Costo Total Plataformas Centralizadas: </label>
+            <em id="costoTotalArea" class="price"> $@ListasTemporales.ListaTICServidoresVirtuales.Sum(item => item.Costo) </em>
+        </span>
+    </div>
+
+    <div class="sector">
+        <h1>Plataformas Centralizadas</h1>
+        @foreach (Setup setup in ListasTemporales.ListaTICPlataformasCentralizadas)
+        {
+            <div class="resumenSetup" style="display: block;">
+                <span style="display: block;">
+                    <label for="dropdownTipoEquipo">Equipos: </label>
+                    <select id="dropdownTipoEquipo" @bind="@setup.TipoEquipo.Nombre">
+                        <option value="@setup.TipoEquipo.Nombre">@setup.TipoEquipo.Nombre</option>
+                        @foreach (var option in VSTIC.PlataformasCentralizadas.getVariables())
                         {
                             if (option != @setup.TipoEquipo.Nombre)
                             {
@@ -232,28 +359,12 @@
                 </span>
 
                 <span style="display: block;">
-                    <label for="cantidadEquipos">Numero de Servidores: </label>
-                    <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
-                </span>
-
-                <button @onclick="() => removeSetup(ListasTemporales.ListaTICServidoresFisicos, setup)">Eliminar Servidores</button>
-
-            </div>
-        }
-    </div>
-
-    <div class="sector">
-        <h1>Servidores Virtuales</h1>
-        @foreach (Setup setup in ListasTemporales.ListaTICServidoresVirtuales)
-        {
-            <div class="resumenSetup" style="display: block;">
-                <span style="display: block;">
-                    <label for="dropdownTipoEquipo">Servidor: </label>
-                    <select id="dropdownTipoEquipo" @bind="@setup.TipoEquipo.Nombre">
-                        <option value="@setup.TipoEquipo.Nombre">@setup.TipoEquipo.Nombre</option>
-                        @foreach (var option in VSTIC.ServidoresVirtuales.getVariables())
+                    <label for="dropdownContrato">Contrato: </label>
+                    <select id="dropdownContrato" @bind="@setup.Contrato.Nombre">
+                        <option value="@setup.Contrato.Nombre">@setup.Contrato.Nombre</option>
+                        @foreach (var option in VSTIC.Contratos.getVariables())
                         {
-                            if (option != @setup.TipoEquipo.Nombre)
+                            if (option != @setup.Contrato.Nombre)
                             {
                                 <option value="@option">@option</option>
 
@@ -263,30 +374,31 @@
                 </span>
 
                 <span style="display: block;">
-                    <label for="dropdownActualizacion">Actualizacion: </label>
-                    <select id="dropdownActualizacion" @bind="@setup.Actualizacion.Nombre">
-                        <option value="@setup.Actualizacion.Nombre">@setup.Actualizacion.Nombre</option>
-                        @foreach (var option in VSTIC.Actualizacion.getVariables())
-                        {
-                            if (option != @setup.Actualizacion.Nombre)
-                            {
-                                <option value="@option">@option</option>
-
-                            }
-                        }
-                    </select>
-                </span>
-
-                <span style="display: block;">
-                    <label for="cantidadEquipos">Numero de Servidores: </label>
+                    <label for="cantidadEquipos">Numero de Equipos: </label>
                     <input id="cantidadEquipos" type="number" @bind="setup.Cantidad" />
                 </span>
 
-                <button @onclick="() => removeSetup(ListasTemporales.ListaTICServidoresVirtuales, setup)">Eliminar Servidores</button>
+                <span style="display: block;">
+                    <label for="costoSetup">Costo:</label>
+                    <em id="costoSetup" class="price"> $@setup.Costo </em>
+                </span>
+
+                <button @onclick="() => StateHasChanged()">Actualizar Equipos</button>
+
+                <button @onclick="() => removeSetup(ListasTemporales.ListaTICPlataformasCentralizadas, setup)">Eliminar Equipos</button>
 
             </div>
         }
+        <span style="display:block">
+            <label for="costoTotalArea">Costo Total Plataformas Centralizadas: </label>
+            <em id="costoTotalArea" class="price"> $@ListasTemporales.ListaTICPlataformasCentralizadas.Sum(item => item.Costo) </em>
+        </span>
     </div>
+
+    <span style="display:block">
+        <label for="costoTotalSetup">Costo Total Setup: </label>
+        <em id="costoTotalSetup" class="price"> $@ListasTemporales.calcularCostoTotal("TIC") </em>
+    </span>
 
     <button @onclick="ContinuarAOngoing">Continuar</button>
 
@@ -349,6 +461,7 @@
         nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresFisicos = ListasTemporales.ListaTICServidoresFisicos;
         nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresVirtuales = ListasTemporales.ListaTICServidoresVirtuales;
         nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaPlataformasCentralizadas = ListasTemporales.ListaTICPlataformasCentralizadas;
+        ListasTemporales = new ListasSetupTemporales();
         NavigationManager.NavigateTo("/resumenPrueba");
     }
 

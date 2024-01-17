@@ -14,6 +14,8 @@
                     else
                     {
                         <ResumenSetupTIC />
+                        <button @onclick='MostrarSeleccion'>Regresar</button>
+
                     }
                 </CascadingValue>
 
@@ -152,6 +154,12 @@
     private void MostrarResumen()
     {
         resumen = true;
+        StateHasChanged();
+    }
+
+    private void MostrarSeleccion()
+    {
+        resumen = false;
         StateHasChanged();
     }
 }

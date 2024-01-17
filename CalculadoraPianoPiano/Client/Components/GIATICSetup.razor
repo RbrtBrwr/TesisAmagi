@@ -182,46 +182,69 @@
 
 
     @*TODO: Falta plataformas centralizadas*@
-    <div class="section" style="display: block;">
-        <h2 style="display: block;">Plataformas Centralizadas</h2>
-        <select @bind="centralizadasDropdown" style="display: block;">
+<div class="section" style="display: block;">
+    <h2 style="display: block;">Plataformas Centralizadas</h2>
+    <span style="display: block;">
+        <label for="seleccionPlataformaCentralizada">Plataforma:</label>
+        <select id="seleccionPlataformaCentralizada" @bind="centralizadasDropdown">
             <option value="">Seleccionar</option>
-            @foreach (var option in plataformasCentralizadas)
+            @foreach (var option in VSTIC.PlataformasCentralizadas.getVariables())
             {
                 <option value="@option">@option</option>
             }
         </select>
-        <input type="number" @bind="cantidadCentralizadas" style="display: block;" />
-        <select @bind="actualizacionCentralizadasDropdown" style="display: block;">
+    </span>
+
+    <span style="display: block;">
+        <label for="cantidadPlataformaCentralizada">Cantidad:</label>
+        <input id="cantidadPlataformaCentralizada" type="number" @bind="cantidadCentralizadas" />
+    </span>
+
+    <span style="display: block;">
+        <label for="actualizacionPlataformaCentralizada">Actualizacion:</label>
+        <select id="actualizacionPlataformaCentralizada" @bind="actualizacionCentralizadasDropdown">
             <option value="">Seleccionar</option>
-            @foreach (var option in actualizacion)
+            @foreach (var option in VSTIC.Actualizacion.getVariables())
             {
                 <option value="@option">@option</option>
             }
         </select>
-        <select @bind="atencionCentralizadasDropdown" style="display: block;">
+    </span>
+
+    <span style="display: block;">
+        <label for="atencionPlataformaCentralizada">Atencion:</label>
+        <select id="atencionPlataformaCentralizada" @bind="atencionCentralizadasDropdown">
             <option value="">Seleccionar</option>
-            @foreach (var option in atencion)
+            @foreach (var option in VSTIC.Atencion.getVariables())
             {
                 <option value="@option">@option</option>
             }
         </select>
-        <select @bind="distribucionCentralizadasDropdown" style="display: block;">
+    </span>
+
+    <span style="display: block;">
+        <label for="distribucionPlataformaCentralizada">Distribucion:</label>
+        <select id="distribucionPlataformaCentralizada" @bind="distribucionCentralizadasDropdown">
             <option value="">Seleccionar</option>
-            @foreach (var option in distribucion)
+            @foreach (var option in VSTIC.Distribucion.getVariables())
             {
                 <option value="@option">@option</option>
             }
         </select>
-        <select @bind="contratoCentralizadasDropdown" style="display: block;">
+    </span>
+
+    <span style="display: block;">
+        <label for="contratoPlataformaCentralizada">Contrato:</label>
+        <select id="contratoPlataformaCentralizada" @bind="contratoCentralizadasDropdown">
             <option value="">Seleccionar</option>
-            @foreach (var option in contratos)
+            @foreach (var option in VSTIC.Contratos.getVariables())
             {
                 <option value="@option">@option</option>
             }
         </select>
-        <button @onclick="AgregarAPlataformasCentralizadas" style="display: block;">Agregar Plataformas Centralizadas</button>
-    </div>
+    </span>
+    <button @onclick="AgregarAPlataformasCentralizadas" style="display: block;">Agregar Plataformas Centralizadas</button>
+</div>
 
 </div>
 
@@ -230,178 +253,186 @@
 @code {
 
 
-    public List<Setup>? listaSetupInicial;
+        public List<Setup>? listaSetupInicial;
 
-    [CascadingParameter]
-    public Cliente? nuevoCliente { get; set; }
+        [CascadingParameter]
+        public Cliente? nuevoCliente { get; set; }
 
-    [CascadingParameter]
-    public ListasSetupTemporales? ListasTemporales { get; set; }
+        [CascadingParameter]
+        public ListasSetupTemporales? ListasTemporales { get; set; }
 
-    private string? equiposTelcoDropdown;
-    private int cantidadEquiposTelco;
-    private string? actualizacionEquiposTelcoDropdown;
-    private string? distribucionEquiposTelcoDropdown;
-    private string? atencionEquiposTelcoDropdown;
-
-
-    private string? basesDeDatosDropdown;
-    private int cantidadBasesDeDatos;
-    private string? actualizacionBasesDeDatosDropdown;
-    private string? distribucionBasesDeDatosDropdown;
-    private string? atencionBasesDeDatosDropdown;
-
-    private string? servidoresFisicosDropdown;
-    private string? servidoresVirtualesDropdown;
-    private int cantidadServidoresFisicos;
-    private string? actualizacionServidoresFisicosDropdown;
-    private string? distribucionServidoresFisicosDropdown;
-    private string? atencionServidoresFisicosDropdown;
-
-    private string? actualizacionServidoresVirtualesDropdown;
-    private int cantidadServidoresVirtuales;
-
-    private string? centralizadasDropdown;
-    private int cantidadCentralizadas;
-    private string? actualizacionCentralizadasDropdown;
-    private string? distribucionCentralizadasDropdown;
-    private string? atencionCentralizadasDropdown;
-    private string? contratoCentralizadasDropdown;
-
-    //TODO: no se por que esto tiene que estar static, creo que despues puedo solucionar eso con la api??
-    private static List<string> equiposTelcoOptions = new List<string> { "Equipo", "Switches Cisco", "Switches Otros", "Routers TP-Link", "Routers Ubiquity", "Routers Otros", "Firewalls Fortinet", "Firewalls Otros", "Centrales Avaya", "Centrales Otros", "Centrales Otros" };
-    private List<string> basesDeDatos = new List<string> { "Base de Datos", "SQL", "SQL Nueva", "Oracle", "Oracle Nueva", "Otras", "Otras Nueva" };
-    private List<string> servidores = new List<string> { "Servidor", "Servidor Windows Previo 2012", "Servidor Windows Post 2012 No Actualizado", "Servidor Windows Actualizado", "Servidor Unix Previo 2012", "Servidor Unix Post 2012 No Actualizado", "Servidor Unix Actualizado", "Servidor Otros No Actualizado", "Servidor Otros Actualizado", "Servidor Otros Nuevo", "Servidor Windows Nuevo", "Servidor Unix Nuevo" };
-    private List<string> plataformasCentralizadas = new List<string> { "Equipo", "AS400" };
-    private List<string> actualizacion = new List<string> { "Nivel de Actualizacion", "Actualizacion Baja", "Actualizacion Parcial", "Actualizacion Completa" };
-    private List<string> nubes = new List<string> { "Nube", "AWS", "Azure", "Google", "Otro", "Mixto" };
-    private List<string> distribucion = new List<string> { "Distribucion", "Centralizado", "Parcialmente Centralizado", "No Centralizado" };
-    private List<string> atencion = new List<string> { "Atencion", "Servicio On-Site", "Servicio Remoto", "Servicio Hibrido" };
-    private List<string> estabilizacion = new List<string> { "Estabilizacion", "Estabilizacion Baja", "Estabilizacion Media", "Estabilizacion Alta" };
-    private List<string> contratos = new List<string> { "Sin Contrato", "Contrato de Software", "Contrato de Hardware", "Contrato de Actualizacion", "Contrato Secundario", "Contrato Completo" };
+        private string? equiposTelcoDropdown;
+        private int cantidadEquiposTelco;
+        private string? actualizacionEquiposTelcoDropdown;
+        private string? distribucionEquiposTelcoDropdown;
+        private string? atencionEquiposTelcoDropdown;
 
 
-    [CascadingParameter]
-    public VariablesSetupTIC VSTIC { get; set; }
+        private string? basesDeDatosDropdown;
+        private int cantidadBasesDeDatos;
+        private string? actualizacionBasesDeDatosDropdown;
+        private string? distribucionBasesDeDatosDropdown;
+        private string? atencionBasesDeDatosDropdown;
+
+        private string? servidoresFisicosDropdown;
+        private string? servidoresVirtualesDropdown;
+        private int cantidadServidoresFisicos;
+        private string? actualizacionServidoresFisicosDropdown;
+        private string? distribucionServidoresFisicosDropdown;
+        private string? atencionServidoresFisicosDropdown;
+
+        private string? actualizacionServidoresVirtualesDropdown;
+        private int cantidadServidoresVirtuales;
+
+        private string? centralizadasDropdown;
+        private int cantidadCentralizadas;
+        private string? actualizacionCentralizadasDropdown;
+        private string? distribucionCentralizadasDropdown;
+        private string? atencionCentralizadasDropdown;
+        private string? contratoCentralizadasDropdown;
+
+        //TODO: no se por que esto tiene que estar static, creo que despues puedo solucionar eso con la api??
+        private static List<string> equiposTelcoOptions = new List<string> { "Equipo", "Switches Cisco", "Switches Otros", "Routers TP-Link", "Routers Ubiquity", "Routers Otros", "Firewalls Fortinet", "Firewalls Otros", "Centrales Avaya", "Centrales Otros", "Centrales Otros" };
+        private List<string> basesDeDatos = new List<string> { "Base de Datos", "SQL", "SQL Nueva", "Oracle", "Oracle Nueva", "Otras", "Otras Nueva" };
+        private List<string> servidores = new List<string> { "Servidor", "Servidor Windows Previo 2012", "Servidor Windows Post 2012 No Actualizado", "Servidor Windows Actualizado", "Servidor Unix Previo 2012", "Servidor Unix Post 2012 No Actualizado", "Servidor Unix Actualizado", "Servidor Otros No Actualizado", "Servidor Otros Actualizado", "Servidor Otros Nuevo", "Servidor Windows Nuevo", "Servidor Unix Nuevo" };
+        private List<string> plataformasCentralizadas = new List<string> { "Equipo", "AS400" };
+        private List<string> actualizacion = new List<string> { "Nivel de Actualizacion", "Actualizacion Baja", "Actualizacion Parcial", "Actualizacion Completa" };
+        private List<string> nubes = new List<string> { "Nube", "AWS", "Azure", "Google", "Otro", "Mixto" };
+        private List<string> distribucion = new List<string> { "Distribucion", "Centralizado", "Parcialmente Centralizado", "No Centralizado" };
+        private List<string> atencion = new List<string> { "Atencion", "Servicio On-Site", "Servicio Remoto", "Servicio Hibrido" };
+        private List<string> estabilizacion = new List<string> { "Estabilizacion", "Estabilizacion Baja", "Estabilizacion Media", "Estabilizacion Alta" };
+        private List<string> contratos = new List<string> { "Sin Contrato", "Contrato de Software", "Contrato de Hardware", "Contrato de Actualizacion", "Contrato Secundario", "Contrato Completo" };
 
 
-    public void AgregarATelco()
-    {
-        Setup nuevoSetupTelco = new Setup("Telco");
-        nuevoSetupTelco.Cantidad = cantidadEquiposTelco;
-        nuevoSetupTelco.TipoEquipo = new Variable(equiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(equiposTelcoDropdown));
-        nuevoSetupTelco.Actualizacion = new Variable(actualizacionEquiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(actualizacionEquiposTelcoDropdown));
-        nuevoSetupTelco.Distribucion = new Variable(distribucionEquiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(distribucionEquiposTelcoDropdown));
-        nuevoSetupTelco.Atencion = new Variable(atencionEquiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(atencionEquiposTelcoDropdown));
-        nuevoSetupTelco.calcularCostoConEsfuerzo();
-        if (ListasTemporales.ListaTICTelecomunicaciones != null)
+        [CascadingParameter]
+        public VariablesSetupTIC VSTIC { get; set; }
+
+
+        public void AgregarATelco()
         {
-            ListasTemporales.ListaTICTelecomunicaciones.Add(nuevoSetupTelco);
+            if (cantidadEquiposTelco <= 0 ||
+                    equiposTelcoDropdown == null ||
+                    actualizacionEquiposTelcoDropdown == null ||
+                    distribucionEquiposTelcoDropdown == null ||
+                    atencionEquiposTelcoDropdown == null)
+            {
+                Console.WriteLine("Faltan datos en telco");
+            }
+            else
+            {
+                Setup nuevoSetupTelco = new Setup("Telco");
+                nuevoSetupTelco.Cantidad = cantidadEquiposTelco;
+                nuevoSetupTelco.TipoEquipo = new Variable(equiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(equiposTelcoDropdown));
+                nuevoSetupTelco.Actualizacion = new Variable(actualizacionEquiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(actualizacionEquiposTelcoDropdown));
+                nuevoSetupTelco.Distribucion = new Variable(distribucionEquiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(distribucionEquiposTelcoDropdown));
+                nuevoSetupTelco.Atencion = new Variable(atencionEquiposTelcoDropdown, VSTIC.Telecomunicaciones.getEsfuerzoVariable(atencionEquiposTelcoDropdown));
+                nuevoSetupTelco.calcularCostoConEsfuerzo();
+
+                ListasTemporales.ListaTICTelecomunicaciones.Add(nuevoSetupTelco);
+            }
 
         }
-        else
-        {
-            ListasTemporales.ListaTICTelecomunicaciones = new List<Setup>();
-            ListasTemporales.ListaTICTelecomunicaciones.Add(nuevoSetupTelco);
-        }
-        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaTelecomunicaciones.Add(nuevoSetupTelco);
-    }
 
-    public void AgregarABasesDeDatos()
-    {
-        Setup nuevoSetupBD = new Setup("Bases de Datos");
-        nuevoSetupBD.Cantidad = cantidadBasesDeDatos;
-        nuevoSetupBD.TipoEquipo = new Variable(basesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(basesDeDatosDropdown));
-        nuevoSetupBD.Actualizacion = new Variable(actualizacionBasesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(actualizacionBasesDeDatosDropdown));
-        nuevoSetupBD.Distribucion = new Variable(distribucionBasesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(distribucionBasesDeDatosDropdown));
-        nuevoSetupBD.Atencion = new Variable(atencionBasesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(atencionBasesDeDatosDropdown));
-        //TODO: estabilizacion bases de datos?
-        nuevoSetupBD.calcularCostoConEsfuerzo();
-        if (ListasTemporales.ListaTICBasesDeDatos != null)
-        {
-            ListasTemporales.ListaTICBasesDeDatos.Add(nuevoSetupBD);
 
-        }
-        else
+
+        public void AgregarABasesDeDatos()
         {
-            ListasTemporales.ListaTICBasesDeDatos = new List<Setup>();
-            ListasTemporales.ListaTICBasesDeDatos.Add(nuevoSetupBD);
+            if (cantidadBasesDeDatos <= 0 ||
+                    basesDeDatosDropdown == null ||
+                    actualizacionBasesDeDatosDropdown == null ||
+                    distribucionBasesDeDatosDropdown == null ||
+                    atencionBasesDeDatosDropdown == null)
+            {
+                Console.WriteLine("Faltan datos Bases de Datos");
+            }
+            else
+            {
+
+                Setup nuevoSetupBD = new Setup("Bases de Datos");
+                nuevoSetupBD.Cantidad = cantidadBasesDeDatos;
+                nuevoSetupBD.TipoEquipo = new Variable(basesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(basesDeDatosDropdown));
+                nuevoSetupBD.Actualizacion = new Variable(actualizacionBasesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(actualizacionBasesDeDatosDropdown));
+                nuevoSetupBD.Distribucion = new Variable(distribucionBasesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(distribucionBasesDeDatosDropdown));
+                nuevoSetupBD.Atencion = new Variable(atencionBasesDeDatosDropdown, VSTIC.BasesDeDatos.getEsfuerzoVariable(atencionBasesDeDatosDropdown));
+                //TODO: estabilizacion bases de datos?
+                nuevoSetupBD.calcularCostoConEsfuerzo();
+
+                ListasTemporales.ListaTICBasesDeDatos.Add(nuevoSetupBD);
+
+            }
         }
-        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaBasesDeDatos.Add(nuevoSetupBD);
-    }
 
     public void AgregarAServidoresFisicos()
     {
-        Setup nuevoSetupServidoresFisicos = new Setup("Servidores Fisicos");
-        nuevoSetupServidoresFisicos.Cantidad = cantidadServidoresFisicos;
-        nuevoSetupServidoresFisicos.TipoEquipo = new Variable(servidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(servidoresFisicosDropdown));
-        //TODO: creo que no va actualizacion asi sino solo en el tipo de equipo
-        nuevoSetupServidoresFisicos.Actualizacion = new Variable(actualizacionServidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(actualizacionServidoresFisicosDropdown));
-        nuevoSetupServidoresFisicos.Distribucion = new Variable(distribucionServidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(distribucionServidoresFisicosDropdown));
-        nuevoSetupServidoresFisicos.Atencion = new Variable(atencionServidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(atencionServidoresFisicosDropdown));
-        //TODO: estabilizacion servidores?
-        nuevoSetupServidoresFisicos.calcularCostoConEsfuerzo();
-
-        if (ListasTemporales.ListaTICServidoresFisicos != null)
+        if (cantidadServidoresFisicos <= 0 ||
+                servidoresFisicosDropdown == null ||
+                actualizacionServidoresFisicosDropdown == null ||
+                distribucionServidoresFisicosDropdown == null ||
+                atencionServidoresFisicosDropdown == null)
         {
-            ListasTemporales.ListaTICServidoresFisicos.Add(nuevoSetupServidoresFisicos);
-
+            Console.WriteLine("Faltan datos Servidores Fisicos");
         }
         else
         {
-            ListasTemporales.ListaTICServidoresFisicos = new List<Setup>();
-            ListasTemporales.ListaTICServidoresFisicos.Add(nuevoSetupServidoresFisicos);
-        }
 
-        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresFisicos.Add(nuevoSetupServidoresFisicos);
+            Setup nuevoSetupServidoresFisicos = new Setup("Servidores Fisicos");
+            nuevoSetupServidoresFisicos.Cantidad = cantidadServidoresFisicos;
+            nuevoSetupServidoresFisicos.TipoEquipo = new Variable(servidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(servidoresFisicosDropdown));
+            //TODO: creo que no va actualizacion asi sino solo en el tipo de equipo
+            nuevoSetupServidoresFisicos.Actualizacion = new Variable(actualizacionServidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(actualizacionServidoresFisicosDropdown));
+            nuevoSetupServidoresFisicos.Distribucion = new Variable(distribucionServidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(distribucionServidoresFisicosDropdown));
+            nuevoSetupServidoresFisicos.Atencion = new Variable(atencionServidoresFisicosDropdown, VSTIC.ServidoresFisicos.getEsfuerzoVariable(atencionServidoresFisicosDropdown));
+            //TODO: estabilizacion servidores?
+            nuevoSetupServidoresFisicos.calcularCostoConEsfuerzo();
+
+            ListasTemporales.ListaTICServidoresFisicos.Add(nuevoSetupServidoresFisicos);
+
+        }
     }
 
     public void AgregarAServidoresVirtuales()
     {
-        Setup nuevoSetupServidoresVirtuales = new Setup("Servidores Virtuales");
-        nuevoSetupServidoresVirtuales.Cantidad = cantidadServidoresVirtuales;
-        nuevoSetupServidoresVirtuales.TipoEquipo = new Variable(servidoresVirtualesDropdown, VSTIC.ServidoresVirtuales.getEsfuerzoVariable(servidoresVirtualesDropdown));
-        //TODO: creo que no va actualizacion asi sino solo en el tipo de equipo
-        nuevoSetupServidoresVirtuales.Actualizacion = new Variable(actualizacionServidoresVirtualesDropdown, VSTIC.ServidoresVirtuales.getEsfuerzoVariable(actualizacionServidoresVirtualesDropdown));
-        //TODO: estabilizacion servidores?
-        nuevoSetupServidoresVirtuales.calcularCostoConEsfuerzo();
-
-        if (ListasTemporales.ListaTICServidoresVirtuales != null)
+        if (cantidadServidoresVirtuales <= 0 ||
+                servidoresVirtualesDropdown == null)
         {
-            ListasTemporales.ListaTICServidoresVirtuales.Add(nuevoSetupServidoresVirtuales);
-
+            Console.WriteLine("Faltan datos en servidores virtuales");
         }
         else
         {
-            ListasTemporales.ListaTICServidoresVirtuales = new List<Setup>();
+            Setup nuevoSetupServidoresVirtuales = new Setup("Servidores Virtuales");
+            nuevoSetupServidoresVirtuales.Cantidad = cantidadServidoresVirtuales;
+            nuevoSetupServidoresVirtuales.TipoEquipo = new Variable(servidoresVirtualesDropdown, VSTIC.ServidoresVirtuales.getEsfuerzoVariable(servidoresVirtualesDropdown));
+            //TODO: estabilizacion servidores?
+            nuevoSetupServidoresVirtuales.calcularCostoConEsfuerzo();
+
             ListasTemporales.ListaTICServidoresVirtuales.Add(nuevoSetupServidoresVirtuales);
         }
-
-        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaServidoresVirtuales.Add(nuevoSetupServidoresVirtuales);
     }
 
-    //TODO: Esto esta malisimo jeje
     public void AgregarAPlataformasCentralizadas()
     {
-        Setup nuevoSetupTelco = new Setup("Plataformas Centralizadas");
-        nuevoSetupTelco.Cantidad = cantidadEquiposTelco;
-        nuevoSetupTelco.TipoEquipo = new Variable(equiposTelcoDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(equiposTelcoDropdown));
-        nuevoSetupTelco.Actualizacion = new Variable(actualizacionEquiposTelcoDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(actualizacionEquiposTelcoDropdown));
-        nuevoSetupTelco.Distribucion = new Variable(distribucionEquiposTelcoDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(distribucionEquiposTelcoDropdown));
-        nuevoSetupTelco.Atencion = new Variable(atencionEquiposTelcoDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(atencionEquiposTelcoDropdown));
-        nuevoSetupTelco.calcularCostoConEsfuerzo();
-
-        if (ListasTemporales.ListaTICPlataformasCentralizadas != null)
+        if (cantidadEquiposTelco <= 0 ||
+                centralizadasDropdown == null ||
+                actualizacionCentralizadasDropdown == null ||
+                distribucionCentralizadasDropdown == null ||
+                atencionCentralizadasDropdown == null ||
+                contratoCentralizadasDropdown == null)
         {
-            ListasTemporales.ListaTICPlataformasCentralizadas.Add(nuevoSetupTelco);
-
+            Console.WriteLine("Faltan datos Plataformas Centralizadas");
         }
         else
         {
-            ListasTemporales.ListaTICPlataformasCentralizadas = new List<Setup>();
-            ListasTemporales.ListaTICPlataformasCentralizadas.Add(nuevoSetupTelco);
-        }
+            Setup nuevoSetupPlataformasCentralizadas = new Setup("Plataformas Centralizadas");
+            nuevoSetupPlataformasCentralizadas.Cantidad = cantidadEquiposTelco;
+            nuevoSetupPlataformasCentralizadas.TipoEquipo = new Variable(centralizadasDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(centralizadasDropdown));
+            nuevoSetupPlataformasCentralizadas.Actualizacion = new Variable(actualizacionCentralizadasDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(actualizacionCentralizadasDropdown));
+            nuevoSetupPlataformasCentralizadas.Distribucion = new Variable(distribucionCentralizadasDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(distribucionCentralizadasDropdown));
+            nuevoSetupPlataformasCentralizadas.Atencion = new Variable(atencionCentralizadasDropdown, VSTIC.PlataformasCentralizadas.getEsfuerzoVariable(atencionCentralizadasDropdown));
+            nuevoSetupPlataformasCentralizadas.Contrato = new Variable(contratoCentralizadasDropdown, VSTIC.Contratos.getEsfuerzoVariable(contratoCentralizadasDropdown));
+            nuevoSetupPlataformasCentralizadas.calcularCostoConEsfuerzo();
 
-        nuevoCliente.ListasGIA.ListasTIC.ListaSetupTIC.ListaPlataformasCentralizadas.Add(nuevoSetupTelco);
+            ListasTemporales.ListaTICPlataformasCentralizadas.Add(nuevoSetupPlataformasCentralizadas);
+
+        }
     }
 }
